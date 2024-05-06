@@ -15,17 +15,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// OLED Rotation enum values are flags
-typedef enum {
-    OLED_ROTATION_0   = 0,
-    OLED_ROTATION_90  = 1,
-    OLED_ROTATION_180 = 2,
-    OLED_ROTATION_270 = 3, // OLED_ROTATION_90 | OLED_ROTATION_180
-} oled_rotation_t;
+#include "klor.h"
+
 
 oled_rotation_t oled_init_kb(oled_rotation_t rotation) {
     return OLED_ROTATION_180;
 }
+
+
+//#ifdef HAPTIC_ENABLE
+//#include "drivers/haptic/DRV2605L.h"
+//#endif //HAPTIC ENABLE
+
 
 #ifdef SWAP_HANDS_ENABLE
 
@@ -231,3 +232,6 @@ void suspend_wakeup_init_kb(void) {
     suspend_wakeup_init_user();
 }
 #endif //RGB_MATRIX_ENABLE
+
+
+

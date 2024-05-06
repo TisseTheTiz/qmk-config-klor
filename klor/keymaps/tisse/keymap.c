@@ -19,10 +19,7 @@
 #include QMK_KEYBOARD_H
 #include <stdio.h>
 #include <string.h>
-#include "klor.h"
-#ifdef HAPTIC_ENABLE
-#include "drivers/haptic/DRV2605L.h"
-#endif //HAPTIC ENABLE
+#include "features/achordion.h"
 
 
 // ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -37,7 +34,7 @@
 enum klor_layers {
     /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
     _QWERTY,
-    _COLEMAK,
+    /* _COLEMAK, */
     _SYM,
     _NUM,
     _NAV,
@@ -49,15 +46,17 @@ enum klor_layers {
 
 enum custom_keycodes {
     QWERTY = SAFE_RANGE,
-    COLEMAK,
+    /* COLEMAK, */
     SYM,
     NUM,
     NAV,
     OS_SWAP,
     MAKE_H,
+    SHT_T,
+    SHT_N,
     VIM_TOP,
     VIM_INC,
-    VIM_DEC
+    VIM_DEC,
 };
 
 // ┌───────────────────────────────────────────────────────────┐
@@ -73,10 +72,10 @@ enum custom_keycodes {
 
 // RIGHT HAND HOME ROW MODS ├──────────────────────────────────┐
 
-#define SEMI_HRM MT(MOD_RSFT, KC_SCLN)
-#define L_HRM MT(MOD_RCTL, KC_L)
-#define K_HRM MT(MOD_RALT, KC_K)
-#define J_HRM MT(MOD_RGUI, KC_J)
+#define SEMI_HRM MT(MOD_RGUI, KC_SCLN)
+#define L_HRM MT(MOD_RALT, KC_L)
+#define K_HRM MT(MOD_RCTL, KC_K)
+#define J_HRM MT(MOD_RSFT, KC_J)
 
 // LAYER-TAP KEYS ├────────────────────────────────────────────┐
 
@@ -123,7 +122,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  //╷           ╷           ╷           ╷           ╷           ╷           ╷╷           ╷           ╷           ╷           ╷           ╷           ╷
     KC_Q     ,  KC_W     ,  KC_E     ,  KC_R     ,  KC_T     ,                           KC_Y     ,  KC_U     ,  KC_I     ,  KC_O     ,  KC_P     ,
     A_HRM    ,  S_HRM    ,  D_HRM    ,  F_HRM    ,  KC_G     ,                           KC_H     ,  J_HRM    ,  K_HRM    ,  L_HRM    ,  SEMI_HRM ,
-    KC_Z     ,  KC_X     ,  KC_C     ,  KC_V     ,  KC_B     ,  KC_MPLY  ,   KC_MUTE  ,  KC_N     ,  KC_M     ,  KC_COMM  ,  KC_DOT   ,  KS_SLSH  ,
+    KC_Z     ,  KC_X     ,  KC_C     ,  KC_V     ,  KC_B     ,  KC_MPLY  ,   KC_MUTE  ,  KC_N     ,  KC_M     ,  KC_COMM  ,  KC_DOT   ,  KC_SLSH  ,
                                         TG(_NAV) ,  NAV_TAB  ,  NUM_ENT  ,   SYM_SPC  ,  KC_BSPC  ,  KC_ESC
  ),
 
@@ -143,13 +142,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                        │Toggle NAV │  Tab/NAV  │ Enter/NUM ││ Space/SYM │ Backspace │           │
                                        └───────────┴───────────┴───────────┘└───────────┴───────────┴───────────┘ */
 
-   [_COLEMAK] = LAYOUT_saegewerk(
- //╷           ╷           ╷           ╷           ╷           ╷           ╷╷           ╷           ╷           ╷           ╷           ╷           ╷
-    KC_Q     ,  KC_W     ,  KC_E     ,  KC_R     ,  KC_T     ,                           KC_Y     ,  KC_U     ,  KC_I     ,  KC_O     ,  KC_P     ,
-    KC_A     ,  KC_S     ,  KC_D     ,  KC_F     ,  KC_G     ,                           KC_H     ,  KC_J     ,  KC_K     ,  KC_L     ,  KC_SCLN  ,
-    KC_Z     ,  KC_X     ,  KC_C     ,  KC_V     ,  KC_B     ,  KC_MPLY  ,   KC_MUTE  ,  KC_N     ,  KC_M     ,  KC_COMM  ,  KC_DOT   ,  KS_SLSH  ,
-                                        _________,  KC_TAB   ,  KC_ENT   ,   KC_SPC   ,  KC_BSPC  ,  _________
- ),
+ /*   [_COLEMAK] = LAYOUT_saegewerk( */
+ /* //╷           ╷           ╷           ╷           ╷           ╷           ╷╷           ╷           ╷           ╷           ╷           ╷           ╷ */
+ /*    KC_Q     ,  KC_W     ,  KC_E     ,  KC_R     ,  KC_T     ,                           KC_Y     ,  KC_U     ,  KC_I     ,  KC_O     ,  KC_P     , */
+ /*    KC_A     ,  KC_S     ,  KC_D     ,  KC_F     ,  KC_G     ,                           KC_H     ,  KC_J     ,  KC_K     ,  KC_L     ,  KC_SCLN  , */
+ /*    KC_Z     ,  KC_X     ,  KC_C     ,  KC_V     ,  KC_B     ,  KC_MPLY  ,   KC_MUTE  ,  KC_N     ,  KC_M     ,  KC_COMM  ,  KC_DOT   ,  KC_SLSH  , */
+ /*                                        _______  ,  KC_TAB   ,  KC_ENT   ,   KC_SPC   ,  KC_BSPC  ,  _______ */
+ /* ), */
 
  /*
    ╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸
@@ -169,10 +168,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
    [_SYM] = LAYOUT_saegewerk(
  //╷           ╷           ╷           ╷           ╷           ╷           ╷╷           ╷           ╷           ╷           ╷           ╷           ╷
-    KC_TILD  ,  KC_GRAVE ,  KC_QUOT  ,  KC_DQUO  ,  _________,                           _________,  _________,  _________,  _________,  _________,
-    KC_EXCL  ,  KC_AT    ,  KC_HASH  ,  KC_DOLLAR,  KC_PERC  ,                           _________,  _________,  _________,  _________,  _________,
-    _________,  _________,  KC_PIPE  ,  KC_AMPR  ,  _________,  _________,   _________,  _________,  _________,  _________,  _________,  _________,
-                                        _________,  _________,  KC_BSLS  ,   _________,  _________,  _________
+    KC_TILD  ,  KC_GRAVE ,  KC_QUOT  ,  KC_DQUO  ,  _______  ,                           _______  ,  _______  ,  _______  ,  _______  ,  _______  ,
+    KC_EXLM  ,  KC_AT    ,  KC_HASH  ,  KC_DOLLAR,  KC_PERC  ,                           _______  ,  _______  ,  _______  ,  _______  ,  _______  ,
+    _______  ,  _______  ,  KC_PIPE  ,  KC_AMPR  ,  _______  ,  _______  ,   _______  ,  _______  ,  _______  ,  _______  ,  _______  ,  _______  ,
+                                        _______  ,  _______  ,  KC_BSLS  ,   _______  ,  _______  ,  _______
  ),
 
  /*
@@ -195,8 +194,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  //╷           ╷           ╷           ╷           ╷           ╷           ╷╷           ╷           ╷           ╷           ╷           ╷           ╷
     KC_F1    ,  KC_F2    ,  KC_F3    ,  KC_F4    ,  KC_F5    ,                           KC_PLUS  ,  KC_1     ,  KC_2     ,  KC_3     ,  KC_CIRC  ,
     KC_F6    ,  KC_F7    ,  KC_F8    ,  KC_F9    ,  KC_F10   ,                           KC_EQUAL ,  KC_4     ,  KC_5     ,  KC_6     ,  KC_MINUS ,
-    _________,  _________,  _________,  KC_F11   ,  KC_F12   ,  _________,   _________,  KC_ASTR  ,  KC_7     ,  KC_8     ,  KC_9     ,  KC_UNDS  ,
-                                        _________,  _________,  _________,   _________,  KC_0     ,  _________
+    _______  ,  _______  ,  _______  ,  KC_F11   ,  KC_F12   ,  _______  ,   _______  ,  KC_ASTR  ,  KC_7     ,  KC_8     ,  KC_9     ,  KC_UNDS  ,
+                                        _______  ,  _______  ,  _______  ,   _______  ,  KC_0     ,  _______
  ),
 
  /*
@@ -206,7 +205,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    │ n a v i g a t i o n                                       │
    └───────────────────────────────────────────────────────────┘
    ┌───────────┬───────────┬───────────┬───────────┬───────────┐                        ┌───────────┬───────────┬───────────┬───────────┬───────────┐
-   │   Reset   │           │           │           │           │ ╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮ │           │     (     │     )     │     {     │     }     │
+   │   Reset   │           │           │           │  Swap OS  │ ╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮ │           │     (     │     )     │     {     │     }     │
    ├───────────┼───────────┼───────────┼───────────┼───────────┤ │╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯│ ├───────────┼───────────┼───────────┼───────────┼───────────┤
    │Bootloader │           │           │           │           ├─╯                    ╰─┤     ←     │     ↓     │     ↑     │     →     │           │
    ├───────────┼───────────┼───────────┼───────────┼───────────┤╭──────────╮╭──────────╮├───────────┼───────────┼───────────┼───────────┼───────────┤
@@ -217,10 +216,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
    [_NAV] = LAYOUT_saegewerk(
  //╷           ╷           ╷           ╷           ╷           ╷           ╷╷           ╷           ╷           ╷           ╷           ╷           ╷
-    QK_REBOOT,  _________,  _________,  _________,  _________,                           _________,  KC_LPRN  ,  KC_RPRN  ,  KC_LBRC  ,  KC_RBRC  ,
-    QK_BOOT  ,  _________,  _________,  _________,  _________,                           KC_LEFT  ,  KC_DOWN  ,  KC_UP    ,  KC_RIGHT ,  _________,
-    MAKE_H   ,  _________,  _________,  _________,  _________,  S(KC_W)  ,   VIM_TOP  ,  _________,  KC_LBRC  ,  KC_RBRC  ,  _________,  _________,
-                                        _________,  _________,  _________,   _________,  _________,  _________
+    QK_REBOOT,  _______  ,  _______  ,  _______  ,  OS_SWAP  ,                           _______  ,  KC_LPRN  ,  KC_RPRN  ,  KC_LBRC  ,  KC_RBRC  ,
+    QK_BOOT  ,  _______  ,  _______  ,  _______  ,  _______  ,                           KC_LEFT  ,  KC_DOWN  ,  KC_UP    ,  KC_RIGHT ,  _______  ,
+    MAKE_H   ,  _______  ,  _______  ,  _______  ,  _______  ,  S(KC_W)  ,   VIM_TOP  ,  _______  ,  KC_LBRC  ,  KC_RBRC  ,  _______  ,  _______  ,
+                                        _______  ,  _______  ,  _______  ,   KC_DEL   ,  _______  ,  _______
  )
 
  /*
@@ -288,6 +287,7 @@ int dmacro_num = 0;
 
 
 void matrix_scan_user(void) {
+    achordion_task();
   #ifdef DYNAMIC_MACRO_ENABLE
     // DynMacroTimer
     if(dmacro_num > 0){
@@ -430,8 +430,8 @@ layer_state_t layer_state_set_kb(layer_state_t state) {
       if (dmacro_num < 1) {
           strcpy ( o_text, layer_state_str );
     }
-  //return state;
-    return update_tri_layer_state(state, _NUM, _SYM, _NAV);
+    return state;
+    /* return update_tri_layer_state(state, _NUM, _SYM, _NAV); */
 }
 
 
@@ -519,6 +519,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 // ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (!process_achordion(keycode, record)) { return false; }
     switch (keycode) {
 
         case VIM_TOP:
@@ -574,30 +575,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 #endif // HAPTIC_ENABLE
             }
             return false;
-        case COLEMAK:
-            if (record->event.pressed) {
-                set_single_persistent_default_layer(_COLEMAK);
-                #ifdef HAPTIC_ENABLE
-                  DRV_pulse(transition_hum);
-                #endif // HAPTIC_ENABLE
-            }
-            return false;
+        /* case COLEMAK: */
+        /*     if (record->event.pressed) { */
+        /*         set_single_persistent_default_layer(_COLEMAK); */
+        /*         #ifdef HAPTIC_ENABLE */
+        /*           DRV_pulse(transition_hum); */
+        /*         #endif // HAPTIC_ENABLE */
+        /*     } */
+        /*     return false; */
         case SYM:
             if (record->event.pressed) {
                 layer_on(_SYM);
-                update_tri_layer(_SYM, _NUM, _NAV);
+                /* update_tri_layer(_SYM, _NUM, _NAV); */
             } else {
                 layer_off(_SYM);
-                update_tri_layer(_SYM, _NUM, _NAV);
+                /* update_tri_layer(_SYM, _NUM, _NAV); */
             }
             return false;
         case NUM:
             if (record->event.pressed) {
                 layer_on(_NUM);
-                update_tri_layer(_SYM, _NUM, _NAV);
+                /* update_tri_layer(_SYM, _NUM, _NAV); */
             } else {
                 layer_off(_NUM);
-                update_tri_layer(_SYM, _NUM, _NAV);
+                /* update_tri_layer(_SYM, _NUM, _NAV); */
             }
             return false;
         case NAV:
@@ -653,7 +654,11 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 
     if (index == 0) {
       if(IS_LAYER_ON(_NAV)){
-
+        if (clockwise) {
+            tap_code(KC_PGDN);
+        } else {
+            tap_code(KC_PGUP);
+        }
       } else {
         if (clockwise) {
           tap_code(KC_VOLU);

@@ -9,13 +9,18 @@ for more options.
 // #define MASTER_RIGHT
 
 //#define TAPPING_TERM 170
-#define TAPPING_TERM 170
+#define TAPPING_TERM 175
+#define PERMISSIVE_HOLD
+#define QUICK_TAP_TERM_PER_KEY
+
+#define ACHORDION_STREAK
 
 // Prevent normal rollover on alphas from accidentally triggering mods.
 /* #define IGNORE_MOD_TAP_INTERRUPT */
 
 // Enable rapid switch from tap to hold, disables double tap hold auto-repeat.
-#define TAPPING_FORCE_HOLD
+/* #define TAPPING_FORCE_HOLD */
+/* #define QUICK_TAP_TERM 0 */
 
 // Auto Shift
 #define NO_AUTO_SHIFT_ALPHA
@@ -30,6 +35,10 @@ for more options.
 
 #define COMBO_COUNT 1
 
+/* #ifdef AUDIO_ENABLE */
+/* #    undef STARTUP_SONG */
+/* #    define STARTUP_SONG SONG(STARTUP_SOUND) */
+/* #endif */
 
 // RGB matrix support
 #ifdef RGB_MATRIX_ENABLE
