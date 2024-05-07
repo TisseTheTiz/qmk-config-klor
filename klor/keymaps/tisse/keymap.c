@@ -63,25 +63,53 @@ enum custom_keycodes {
 // │ d e f i n e   m a c r o n a m e s                         │
 // └───────────────────────────────────────────────────────────┘
 
-// LEFT HAND HOME ROW MODS ├───────────────────────────────────┐
-
-#define A_HRM MT(MOD_LGUI, KC_A)
-#define S_HRM MT(MOD_LALT, KC_S)
-#define D_HRM MT(MOD_LCTL, KC_D)
-#define F_HRM MT(MOD_LSFT, KC_F)
-
-// RIGHT HAND HOME ROW MODS ├──────────────────────────────────┐
-
-#define SEMI_HRM MT(MOD_RGUI, KC_SCLN)
-#define L_HRM MT(MOD_RALT, KC_L)
-#define K_HRM MT(MOD_RCTL, KC_K)
-#define J_HRM MT(MOD_RSFT, KC_J)
+// LEFT AND RIGHT HAND HOME ROW MODS ├───────────────────────────────────┐
+//
+#ifdef ENABLE_HRM_GUI
+    #define A_HRM MT(MOD_LGUI, KC_A)
+    #define SEMI_HRM MT(MOD_RGUI, KC_SCLN)
+#else
+    #define A_HRM KC_A
+    #define SEMI_HRM KC_SCLN
+#endif
+#ifdef ENABLE_HRM_ALT
+    #define S_HRM MT(MOD_LALT, KC_S)
+    #define L_HRM MT(MOD_RALT, KC_L)
+#else
+    #define S_HRM KC_S
+    #define L_HRM KC_L
+#endif
+#ifdef ENABLE_HRM_CTL
+    #define D_HRM MT(MOD_LCTL, KC_D)
+    #define K_HRM MT(MOD_RCTL, KC_K)
+#else
+    #define D_HRM KC_D
+    #define K_HRM KC_K
+#endif
+#ifdef ENABLE_HRM_SFT
+    #define F_HRM MT(MOD_LSFT, KC_F)
+    #define J_HRM MT(MOD_RSFT, KC_J)
+#else
+    #define F_HRM KC_F
+    #define J_HRM KC_J
+#endif
 
 // LAYER-TAP KEYS ├────────────────────────────────────────────┐
 
 #define NUM_ENT LT(_NUM, KC_ENT)
 #define NAV_TAB LT(_NAV, KC_TAB)
 #define SYM_SPC LT(_SYM, KC_SPC)
+
+// ┌───────────────────────────────────────────────────────────┐
+// │ d e f i n e   c o m b o s                                 │
+// └───────────────────────────────────────────────────────────┘
+
+const uint16_t PROGMEM esc_combo[] = {KC_F, KC_J, COMBO_END};
+const uint16_t PROGMEM capslock_combo[] = {KC_LSFT, KC_RSFT, COMBO_END};
+combo_t key_combos[] = {
+    [FJ_ESC] = COMBO(esc_combo, KC_ESC),
+    [LRSFT_ESC] = COMBO(capslock_combo, KC_CAPS),
+};
 
 // ┌───────────────────────────────────────────────────────────┐
 // │ d e f i n e   s o u n d s                                 │
@@ -111,11 +139,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    ┌───────────┬───────────┬───────────┬───────────┬───────────┐                        ┌───────────┬───────────┬───────────┬───────────┬───────────┐
    │     Q     │     W     │     E     │     R     │     T     │ ╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮ │     Y     │     U     │     I     │     O     │     P     │
    ├───────────┼───────────┼───────────┼───────────┼───────────┤ │╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯│ ├───────────┼───────────┼───────────┼───────────┼───────────┤
-   │   A/GUI   │   S/ALT   │ D/CONTROL │  F/SHIFT  │     G     ├─╯                    ╰─┤     H     │  J/SHIFT  │ K/CONTROL │   L/ALT   │   ;/GUI   │
+   │   A/HRM   │   S/HRM   │   D/HRM   │   F/HRM   │     G     ├─╯                    ╰─┤     H     │   J/HRM   │   K/HRM   │   L/HRM   │   ;/HRM   │
    ├───────────┼───────────┼───────────┼───────────┼───────────┤╭──────────╮╭──────────╮├───────────┼───────────┼───────────┼───────────┼───────────┤
    │     Z     │     X     │     C     │     V     │     B     ││Play/Pause││   Mute   ││     N     │     M     │     ,     │     .     │     /     │
    └───────────┴───────────┴───────────┼───────────┼───────────┤╰──────────╯╰──────────╯├───────────┼───────────┼───────────┴───────────┴───────────┘
-                                       │Toggle NAV │  Tab/NAV  │ Enter/NUM ││ Space/SYM │ Backspace │           │
+                                       │  Tab/NAV  │   Shift   │ Enter/NUM ││ Space/SYM │   Shift   │           │
                                        └───────────┴───────────┴───────────┘└───────────┴───────────┴───────────┘ */
 
    [_QWERTY] = LAYOUT_saegewerk(
@@ -123,7 +151,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_Q     ,  KC_W     ,  KC_E     ,  KC_R     ,  KC_T     ,                           KC_Y     ,  KC_U     ,  KC_I     ,  KC_O     ,  KC_P     ,
     A_HRM    ,  S_HRM    ,  D_HRM    ,  F_HRM    ,  KC_G     ,                           KC_H     ,  J_HRM    ,  K_HRM    ,  L_HRM    ,  SEMI_HRM ,
     KC_Z     ,  KC_X     ,  KC_C     ,  KC_V     ,  KC_B     ,  KC_MPLY  ,   KC_MUTE  ,  KC_N     ,  KC_M     ,  KC_COMM  ,  KC_DOT   ,  KC_SLSH  ,
-                                        TG(_NAV) ,  NAV_TAB  ,  NUM_ENT  ,   SYM_SPC  ,  KC_BSPC  ,  KC_ESC
+                                        NAV_TAB  ,  KC_LSFT  ,  NUM_ENT  ,   SYM_SPC  ,  KC_RSFT  ,  KC_ESC
  ),
 
  /*
@@ -135,7 +163,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    ┌───────────┬───────────┬───────────┬───────────┬───────────┐                        ┌───────────┬───────────┬───────────┬───────────┬───────────┐
    │     Q     │     W     │     F     │     P     │     B     │ ╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮ │     J     │     L     │     U     │     Y     │     ;     │
    ├───────────┼───────────┼───────────┼───────────┼───────────┤ │╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯│ ├───────────┼───────────┼───────────┼───────────┼───────────┤
-   │   A/GUI   │   R/ALT   │ S/CONTROL │  T/SHIFT  │     G     ├─╯                    ╰─┤     M     │  N/SHIFT  │ E/CONTROL │   I/ALT   │   O/GUI   │
+   │   A/HRM   │   R/HRM   │   S/HRM   │   T/HRM   │     G     ├─╯                    ╰─┤     M     │   N/HRM   │   E/HRM   │   I/HRM   │   O/HRM   │
    ├───────────┼───────────┼───────────┼───────────┼───────────┤╭──────────╮╭──────────╮├───────────┼───────────┼───────────┼───────────┼───────────┤
    │     Z     │     X     │     C     │     V     │     B     ││Play/Pause││   Mute   ││     K     │     H     │     ,     │     .     │     /     │
    └───────────┴───────────┴───────────┼───────────┼───────────┤╰──────────╯╰──────────╯├───────────┼───────────┼───────────┴───────────┴───────────┘
@@ -181,20 +209,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    │ n u m b e r s                                             │
    └───────────────────────────────────────────────────────────┘
    ┌───────────┬───────────┬───────────┬───────────┬───────────┐                        ┌───────────┬───────────┬───────────┬───────────┬───────────┐
-   │    F1     │    F2     │    F3     │    F4     │    F5     │ ╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮ │     +     │     1     │     2     │     3     │     ^     │
+   │    F1     │    F2     │    F3     │    F4     │    F5     │ ╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮ │     +     │     7     │     8     │     9     │     ^     │
    ├───────────┼───────────┼───────────┼───────────┼───────────┤ │╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯│ ├───────────┼───────────┼───────────┼───────────┼───────────┤
    │    F6     │    F7     │    F8     │    F9     │    F10    ├─╯                    ╰─┤     =     │     4     │     5     │     6     │     -     │
    ├───────────┼───────────┼───────────┼───────────┼───────────┤╭──────────╮╭──────────╮├───────────┼───────────┼───────────┼───────────┼───────────┤
-   │           │           │           │    F11    │    F12    ││          ││          ││     *     │     7     │     8     │     9     │     _     │
+   │           │           │           │    F11    │    F12    ││          ││          ││     *     │     1     │     2     │     3     │     _     │
    └───────────┴───────────┴───────────┼───────────┼───────────┤╰──────────╯╰──────────╯├───────────┼───────────┼───────────┴───────────┴───────────┘
                                        │           │           │           ││           │     0     │           │
                                        └───────────┴───────────┴───────────┘└───────────┴───────────┴───────────┘ */
 
    [_NUM] = LAYOUT_saegewerk(
  //╷           ╷           ╷           ╷           ╷           ╷           ╷╷           ╷           ╷           ╷           ╷           ╷           ╷
-    KC_F1    ,  KC_F2    ,  KC_F3    ,  KC_F4    ,  KC_F5    ,                           KC_PLUS  ,  KC_1     ,  KC_2     ,  KC_3     ,  KC_CIRC  ,
+    KC_F1    ,  KC_F2    ,  KC_F3    ,  KC_F4    ,  KC_F5    ,                           KC_PLUS  ,  KC_7     ,  KC_8     ,  KC_9     ,  KC_CIRC  ,
     KC_F6    ,  KC_F7    ,  KC_F8    ,  KC_F9    ,  KC_F10   ,                           KC_EQUAL ,  KC_4     ,  KC_5     ,  KC_6     ,  KC_MINUS ,
-    _______  ,  _______  ,  _______  ,  KC_F11   ,  KC_F12   ,  _______  ,   _______  ,  KC_ASTR  ,  KC_7     ,  KC_8     ,  KC_9     ,  KC_UNDS  ,
+    _______  ,  _______  ,  _______  ,  KC_F11   ,  KC_F12   ,  _______  ,   _______  ,  KC_ASTR  ,  KC_1     ,  KC_2     ,  KC_3     ,  KC_UNDS  ,
                                         _______  ,  _______  ,  _______  ,   _______  ,  KC_0     ,  _______
  ),
 

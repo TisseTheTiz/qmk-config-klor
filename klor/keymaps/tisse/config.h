@@ -8,6 +8,12 @@ for more options.
 #define MASTER_LEFT
 // #define MASTER_RIGHT
 
+// Enable home row mods
+#define ENABLE_HRM_SFT
+#define ENABLE_HRM_CTL
+#define ENABLE_HRM_ALT
+#define ENABLE_HRM_GUI
+
 //#define TAPPING_TERM 170
 #define TAPPING_TERM 175
 #define PERMISSIVE_HOLD
@@ -33,7 +39,7 @@ for more options.
 //#define NO_ACTION_TAPPING
 //#define NO_MUSIC_MODE
 
-#define COMBO_COUNT 1
+/* #define COMBO_COUNT 1 */
 
 /* #ifdef AUDIO_ENABLE */
 /* #    undef STARTUP_SONG */
