@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "features/achordion.h"
+#include "features/hrm.h"
 
 
 // ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -58,45 +59,20 @@ enum custom_keycodes {
     VIM_INC,
     VIM_DEC,
 };
-
+//
 // ┌───────────────────────────────────────────────────────────┐
 // │ d e f i n e   m a c r o n a m e s                         │
 // └───────────────────────────────────────────────────────────┘
 
-// LEFT AND RIGHT HAND HOME ROW MODS ├───────────────────────────────────┐
-//
-#ifdef ENABLE_HRM_GUI
-    #define A_HRM MT(MOD_LGUI, KC_A)
-    #define SEMI_HRM MT(MOD_RGUI, KC_SCLN)
-#else
-    #define A_HRM KC_A
-    #define SEMI_HRM KC_SCLN
-#endif
-#ifdef ENABLE_HRM_ALT
-    #define S_HRM MT(MOD_LALT, KC_S)
-    #define L_HRM MT(MOD_RALT, KC_L)
-#else
-    #define S_HRM KC_S
-    #define L_HRM KC_L
-#endif
-#ifdef ENABLE_HRM_CTL
-    #define D_HRM MT(MOD_LCTL, KC_D)
-    #define K_HRM MT(MOD_RCTL, KC_K)
-#else
-    #define D_HRM KC_D
-    #define K_HRM KC_K
-#endif
-#ifdef ENABLE_HRM_SFT
-    #define F_HRM MT(MOD_LSFT, KC_F)
-    #define J_HRM MT(MOD_RSFT, KC_J)
-#else
-    #define F_HRM KC_F
-    #define J_HRM KC_J
-#endif
+// MOD-TAP KEYS ├──────────────────────────────────────────────┐
+
+#define SFT_ENT LSFT_T(KC_ENT)
+#define SFT_SPC RSFT_T(KC_SPC)
 
 // LAYER-TAP KEYS ├────────────────────────────────────────────┐
 
 #define NUM_ENT LT(_NUM, KC_ENT)
+#define NUM_TAB LT(_NUM, KC_TAB)
 #define NAV_TAB LT(_NAV, KC_TAB)
 #define SYM_SPC LT(_SYM, KC_SPC)
 
@@ -104,11 +80,35 @@ enum custom_keycodes {
 // │ d e f i n e   c o m b o s                                 │
 // └───────────────────────────────────────────────────────────┘
 
+const uint16_t PROGMEM lctl_combo[] = {D_HRM, F_HRM, COMBO_END};
+const uint16_t PROGMEM rctl_combo[] = {J_HRM, K_HRM, COMBO_END};
+const uint16_t PROGMEM lgui_combo[] = {D_HRM, S_HRM, COMBO_END};
+const uint16_t PROGMEM rgui_combo[] = {K_HRM, L_HRM, COMBO_END};
+const uint16_t PROGMEM lshiftgui_combo[] = {F_HRM, D_HRM, S_HRM, COMBO_END};
+const uint16_t PROGMEM rshiftgui_combo[] = {J_HRM, K_HRM, L_HRM, COMBO_END};
 const uint16_t PROGMEM esc_combo[] = {KC_F, KC_J, COMBO_END};
-const uint16_t PROGMEM capslock_combo[] = {KC_LSFT, KC_RSFT, COMBO_END};
+const uint16_t PROGMEM capslock_combo[] = {SFT_ENT, SFT_SPC, COMBO_END};
 combo_t key_combos[] = {
-    [FJ_ESC] = COMBO(esc_combo, KC_ESC),
-    [LRSFT_ESC] = COMBO(capslock_combo, KC_CAPS),
+    COMBO(lctl_combo, KC_LCTL),
+    COMBO(rctl_combo, KC_RCTL),
+    COMBO(lgui_combo, KC_LGUI),
+    COMBO(rgui_combo, KC_RGUI),
+    COMBO(lshiftgui_combo, S(KC_LGUI)),
+    COMBO(rshiftgui_combo, S(KC_RGUI)),
+    COMBO(esc_combo, KC_ESC),
+    /* COMBO(capslock_combo, KC_CAPS), */
+};
+
+// ┌───────────────────────────────────────────────────────────┐
+// │ d e f i n e   k e y   o v e r r i d e s                   │
+// └───────────────────────────────────────────────────────────┘
+
+const key_override_t backspace_override = ko_make_basic(MOD_MASK_SHIFT, SFT_SPC, KC_BSPC);
+
+// This globally defines all key overrides to be used ├────────┐
+const key_override_t **key_overrides = (const key_override_t *[]){
+  &backspace_override,
+  NULL // Null terminate the array of overrides!
 };
 
 // ┌───────────────────────────────────────────────────────────┐
@@ -124,7 +124,7 @@ combo_t key_combos[] = {
 #endif // AUDIO_ENABLE
 
 // ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-// │ K E Y M A P S                                                                                                                              │
+// │ K E Y M A P S                                                                                                                               │
 // └────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 // ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
 
@@ -143,7 +143,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    ├───────────┼───────────┼───────────┼───────────┼───────────┤╭──────────╮╭──────────╮├───────────┼───────────┼───────────┼───────────┼───────────┤
    │     Z     │     X     │     C     │     V     │     B     ││Play/Pause││   Mute   ││     N     │     M     │     ,     │     .     │     /     │
    └───────────┴───────────┴───────────┼───────────┼───────────┤╰──────────╯╰──────────╯├───────────┼───────────┼───────────┴───────────┴───────────┘
-                                       │  Tab/NAV  │   Shift   │ Enter/NUM ││ Space/SYM │   Shift   │           │
+                                       │  TT NAV   │  Tab/NUM  │Enter/Shift││Space/Shift│    SYM    │           │
                                        └───────────┴───────────┴───────────┘└───────────┴───────────┴───────────┘ */
 
    [_QWERTY] = LAYOUT_saegewerk(
@@ -151,7 +151,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_Q     ,  KC_W     ,  KC_E     ,  KC_R     ,  KC_T     ,                           KC_Y     ,  KC_U     ,  KC_I     ,  KC_O     ,  KC_P     ,
     A_HRM    ,  S_HRM    ,  D_HRM    ,  F_HRM    ,  KC_G     ,                           KC_H     ,  J_HRM    ,  K_HRM    ,  L_HRM    ,  SEMI_HRM ,
     KC_Z     ,  KC_X     ,  KC_C     ,  KC_V     ,  KC_B     ,  KC_MPLY  ,   KC_MUTE  ,  KC_N     ,  KC_M     ,  KC_COMM  ,  KC_DOT   ,  KC_SLSH  ,
-                                        NAV_TAB  ,  KC_LSFT  ,  NUM_ENT  ,   SYM_SPC  ,  KC_RSFT  ,  KC_ESC
+                                        TT(_NAV) ,  NUM_TAB  ,  SFT_ENT  ,   SFT_SPC  ,  SYM      ,  KC_ESC
  ),
 
  /*
@@ -233,20 +233,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    │ n a v i g a t i o n                                       │
    └───────────────────────────────────────────────────────────┘
    ┌───────────┬───────────┬───────────┬───────────┬───────────┐                        ┌───────────┬───────────┬───────────┬───────────┬───────────┐
-   │   Reset   │           │           │           │  Swap OS  │ ╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮ │           │     (     │     )     │     {     │     }     │
+   │   Reset   │           │           │           │Clicky togg│ ╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮ │           │     (     │     )     │     {     │     }     │
    ├───────────┼───────────┼───────────┼───────────┼───────────┤ │╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯│ ├───────────┼───────────┼───────────┼───────────┼───────────┤
-   │Bootloader │           │           │           │           ├─╯                    ╰─┤     ←     │     ↓     │     ↑     │     →     │           │
+   │Bootloader │           │           │           │Incr. click├─╯                    ╰─┤     ←     │     ↓     │     ↑     │     →     │           │
    ├───────────┼───────────┼───────────┼───────────┼───────────┤╭──────────╮╭──────────╮├───────────┼───────────┼───────────┼───────────┼───────────┤
-   │Make Keymap│           │           │           │           ││Shift + W ││    gg    ││           │     [     │     ]     │           │           │
+   │Make Keymap│           │           │           │Decr. click││Shift + W ││    gg    ││           │     [     │     ]     │           │           │
    └───────────┴───────────┴───────────┼───────────┼───────────┤╰──────────╯╰──────────╯├───────────┼───────────┼───────────┴───────────┴───────────┘
-                                       │Toggle NAV │           │           ││           │           │           │
+                                       │Toggle NAV │           │           ││  Delete   │           │           │
                                        └───────────┴───────────┴───────────┘└───────────┴───────────┴───────────┘ */
 
    [_NAV] = LAYOUT_saegewerk(
  //╷           ╷           ╷           ╷           ╷           ╷           ╷╷           ╷           ╷           ╷           ╷           ╷           ╷
-    QK_REBOOT,  _______  ,  _______  ,  _______  ,  OS_SWAP  ,                           _______  ,  KC_LPRN  ,  KC_RPRN  ,  KC_LBRC  ,  KC_RBRC  ,
-    QK_BOOT  ,  _______  ,  _______  ,  _______  ,  _______  ,                           KC_LEFT  ,  KC_DOWN  ,  KC_UP    ,  KC_RIGHT ,  _______  ,
-    MAKE_H   ,  _______  ,  _______  ,  _______  ,  _______  ,  S(KC_W)  ,   VIM_TOP  ,  _______  ,  KC_LBRC  ,  KC_RBRC  ,  _______  ,  _______  ,
+    QK_REBOOT,  _______  ,  _______  ,  _______  ,  CK_TOGG  ,                           _______  ,  KC_LPRN  ,  KC_RPRN  ,  KC_LBRC  ,  KC_RBRC  ,
+    QK_BOOT  ,  _______  ,  _______  ,  _______  ,  CK_UP    ,                           KC_LEFT  ,  KC_DOWN  ,  KC_UP    ,  KC_RIGHT ,  _______  ,
+    MAKE_H   ,  _______  ,  _______  ,  _______  ,  CK_DOWN  ,  S(KC_W)  ,   VIM_TOP  ,  _______  ,  KC_LBRC  ,  KC_RBRC  ,  _______  ,  _______  ,
                                         _______  ,  _______  ,  _______  ,   KC_DEL   ,  _______  ,  _______
  )
 

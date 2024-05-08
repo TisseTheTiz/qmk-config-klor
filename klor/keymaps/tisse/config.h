@@ -9,10 +9,17 @@ for more options.
 // #define MASTER_RIGHT
 
 // Enable home row mods
-#define ENABLE_HRM_SFT
-#define ENABLE_HRM_CTL
-#define ENABLE_HRM_ALT
-#define ENABLE_HRM_GUI
+/* #define ENABLE_HRM_SFT */
+/* #define ENABLE_HRM_CTL */
+/* #define ENABLE_HRM_ALT */
+/* #define ENABLE_HRM_GUI */
+
+#define POS_HRM_GUI 3
+#define POS_HRM_ALT 2
+#define POS_HRM_CTL 1
+#define POS_HRM_SFT 4
+
+#define TAPPING_TOGGLE 1
 
 //#define TAPPING_TERM 170
 #define TAPPING_TERM 175
@@ -21,8 +28,7 @@ for more options.
 
 #define ACHORDION_STREAK
 
-// Prevent normal rollover on alphas from accidentally triggering mods.
-/* #define IGNORE_MOD_TAP_INTERRUPT */
+#define COMBO_MUST_HOLD_MODS
 
 // Enable rapid switch from tap to hold, disables double tap hold auto-repeat.
 /* #define TAPPING_FORCE_HOLD */
@@ -38,6 +44,9 @@ for more options.
 #define NO_ACTION_ONESHOT
 //#define NO_ACTION_TAPPING
 //#define NO_MUSIC_MODE
+//
+#define AUDIO_CLICKY
+#define AUDIO_DEFAULT_CLICKY_ON false
 
 /* #define COMBO_COUNT 1 */
 
