@@ -8,10 +8,10 @@
     #if POS_HRM_GUI == 1
         #ifdef ENABLE_HRM_GUI
             #define A_HRM MT(MOD_LGUI, KC_A)
-            #define SEMI_HRM MT(MOD_RGUI, KC_SCLN)
+            #define COLON_HRM MT(MOD_RGUI, KC_COLN)
         #else
             #define A_HRM KC_A
-            #define SEMI_HRM KC_SCLN
+            #define COLON_HRM KC_COLN
         #endif
     #elif POS_HRM_GUI == 2
         #ifdef ENABLE_HRM_GUI
@@ -43,10 +43,10 @@
     #if POS_HRM_ALT == 1
         #ifdef ENABLE_HRM_ALT
             #define A_HRM MT(MOD_LALT, KC_A)
-            #define SEMI_HRM MT(MOD_RALT, KC_SCLN)
+            #define COLON_HRM MT(MOD_RALT, KC_COLN)
         #else
             #define A_HRM KC_A
-            #define SEMI_HRM KC_SCLN
+            #define COLON_HRM KC_COLN
         #endif
     #elif POS_HRM_ALT == 2
         #ifdef ENABLE_HRM_ALT
@@ -78,10 +78,10 @@
     #if POS_HRM_CTL == 1
         #ifdef ENABLE_HRM_CTL
             #define A_HRM MT(MOD_LCTL, KC_A)
-            #define SEMI_HRM MT(MOD_RCTL, KC_SCLN)
+            #define COLON_HRM MT(MOD_RCTL, KC_COLN)
         #else
             #define A_HRM KC_A
-            #define SEMI_HRM KC_SCLN
+            #define COLON_HRM KC_COLN
         #endif
     #elif POS_HRM_CTL == 2
         #ifdef ENABLE_HRM_CTL
@@ -113,10 +113,10 @@
     #if POS_HRM_SFT == 1
         #ifdef ENABLE_HRM_SFT
             #define A_HRM MT(MOD_LSFT, KC_A)
-            #define SEMI_HRM MT(MOD_RSFT, KC_SCLN)
+            #define COLON_HRM MT(MOD_RSFT, KC_COLN)
         #else
             #define A_HRM KC_A
-            #define SEMI_HRM KC_SCLN
+            #define COLON_HRM KC_COLN
         #endif
     #elif POS_HRM_SFT == 2
         #ifdef ENABLE_HRM_SFT

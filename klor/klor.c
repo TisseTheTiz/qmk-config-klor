@@ -94,6 +94,7 @@ const keypos_t PROGMEM hand_swap_config[MATRIX_ROWS][MATRIX_COLS] =
 //      └────────────────┘        └────────────────┘
 
 
+/*
 // POLYDACTYL / YUBITSUME 
 // use this matrix if you use the polydactyl or yubitsume layout ────────────────────────────────────┐
 
@@ -133,6 +134,7 @@ led_config_t g_led_config = { {
     4, 4, 4, 4, 4, 1, 1
 } };
 // ────────────────────────────────────────────────────────────────────────────────────────────────────┘
+*/
 
 
 /*
@@ -178,7 +180,6 @@ led_config_t g_led_config = { {
 // ────────────────────────────────────────────────────────────────────────────────────────────────────┘
 */
 
-/*
 // SAEGEWERK
 // use this matrix if you use the saegewerk layout ────────────────────────────────────────────────────┐
 
@@ -219,15 +220,14 @@ led_config_t g_led_config = { {
 } };
 
 // ────────────────────────────────────────────────────────────────────────────────────────────────────┘
-*/
 
 void suspend_power_down_kb(void) {
     rgb_matrix_set_suspend_state(true);
-    suspend_power_down_user();
+    suspend_power_down_kb();
 }
 
 void suspend_wakeup_init_kb(void) {
     rgb_matrix_set_suspend_state(false);
-    suspend_wakeup_init_user();
+    suspend_wakeup_init_kb();
 }
 #endif //RGB_MATRIX_ENABLE

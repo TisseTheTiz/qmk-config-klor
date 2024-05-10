@@ -22,7 +22,7 @@ for more options.
 #define TAPPING_TOGGLE 1
 
 //#define TAPPING_TERM 170
-#define TAPPING_TERM 175
+#define TAPPING_TERM 200
 #define PERMISSIVE_HOLD
 #define QUICK_TAP_TERM_PER_KEY
 
@@ -48,6 +48,7 @@ for more options.
 #define AUDIO_CLICKY
 #define AUDIO_DEFAULT_CLICKY_ON false
 
+#define TRI_LAYER_ADJUST_LAYER 4
 /* #define COMBO_COUNT 1 */
 
 /* #ifdef AUDIO_ENABLE */

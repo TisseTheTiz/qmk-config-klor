@@ -29,7 +29,7 @@
 // ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
 
 // ┌───────────────────────────────────────────────────────────┐
-// │ d e f i n e   l a y e r s                                 │
+// │ d e c l a r e   l a y e r s                               │
 // └───────────────────────────────────────────────────────────┘ 
 
 enum klor_layers {
@@ -39,10 +39,11 @@ enum klor_layers {
     _SYM,
     _NUM,
     _NAV,
+    _ADJ,
 };
 
 // ┌───────────────────────────────────────────────────────────┐
-// │ d e f i n e   k e y c o d e s                             │
+// │ d e c l a r e   k e y c o d e s                           │
 // └───────────────────────────────────────────────────────────┘
 
 enum custom_keycodes {
@@ -76,14 +77,34 @@ enum custom_keycodes {
 #define NAV_TAB LT(_NAV, KC_TAB)
 #define SYM_SPC LT(_SYM, KC_SPC)
 
+// TAP-DANCE KEYS ├────────────────────────────────────────────┐
+
+#define TD_AESC TD(A_ESC)
+
+// ┌───────────────────────────────────────────────────────────┐
+// │ d e f i n e   t a p   d a n c e   f u n c t i o n s       │
+// └───────────────────────────────────────────────────────────┘
+
+enum {
+  A_ESC = 0
+};
+
+tap_dance_action_t tap_dance_actions[] = {
+  //Tap once for Esc, twice for Caps Lock
+  [A_ESC]  = ACTION_TAP_DANCE_DOUBLE(A_HRM, KC_ESC)
+// Other declarations would go here, separated by commas, if you have them
+};
+
 // ┌───────────────────────────────────────────────────────────┐
 // │ d e f i n e   c o m b o s                                 │
 // └───────────────────────────────────────────────────────────┘
 
-const uint16_t PROGMEM lctl_combo[] = {D_HRM, F_HRM, COMBO_END};
-const uint16_t PROGMEM rctl_combo[] = {J_HRM, K_HRM, COMBO_END};
+const uint16_t PROGMEM lctl_combo[] = {KC_W, KC_E, COMBO_END};
+const uint16_t PROGMEM rctl_combo[] = {KC_I, KC_O, COMBO_END};
 const uint16_t PROGMEM lgui_combo[] = {D_HRM, S_HRM, COMBO_END};
 const uint16_t PROGMEM rgui_combo[] = {K_HRM, L_HRM, COMBO_END};
+const uint16_t PROGMEM lalt_combo[] = {KC_Q,  KC_W, COMBO_END};
+const uint16_t PROGMEM ralt_combo[] = {KC_O, KC_P, COMBO_END};
 const uint16_t PROGMEM lshiftgui_combo[] = {F_HRM, D_HRM, S_HRM, COMBO_END};
 const uint16_t PROGMEM rshiftgui_combo[] = {J_HRM, K_HRM, L_HRM, COMBO_END};
 const uint16_t PROGMEM esc_combo[] = {KC_F, KC_J, COMBO_END};
@@ -93,6 +114,8 @@ combo_t key_combos[] = {
     COMBO(rctl_combo, KC_RCTL),
     COMBO(lgui_combo, KC_LGUI),
     COMBO(rgui_combo, KC_RGUI),
+    COMBO(lalt_combo, KC_LALT),
+    COMBO(ralt_combo, KC_RALT),
     COMBO(lshiftgui_combo, S(KC_LGUI)),
     COMBO(rshiftgui_combo, S(KC_RGUI)),
     COMBO(esc_combo, KC_ESC),
@@ -104,10 +127,12 @@ combo_t key_combos[] = {
 // └───────────────────────────────────────────────────────────┘
 
 const key_override_t backspace_override = ko_make_basic(MOD_MASK_SHIFT, SFT_SPC, KC_BSPC);
+const key_override_t flipcolon_override = ko_make_basic(MOD_MASK_SHIFT, KC_COLON, KC_SEMICOLON);
 
 // This globally defines all key overrides to be used ├────────┐
 const key_override_t **key_overrides = (const key_override_t *[]){
   &backspace_override,
+  &flipcolon_override,
   NULL // Null terminate the array of overrides!
 };
 
@@ -139,7 +164,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    ┌───────────┬───────────┬───────────┬───────────┬───────────┐                        ┌───────────┬───────────┬───────────┬───────────┬───────────┐
    │     Q     │     W     │     E     │     R     │     T     │ ╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮ │     Y     │     U     │     I     │     O     │     P     │
    ├───────────┼───────────┼───────────┼───────────┼───────────┤ │╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯│ ├───────────┼───────────┼───────────┼───────────┼───────────┤
-   │   A/HRM   │   S/HRM   │   D/HRM   │   F/HRM   │     G     ├─╯                    ╰─┤     H     │   J/HRM   │   K/HRM   │   L/HRM   │   ;/HRM   │
+   │   A/HRM   │   S/HRM   │   D/HRM   │   F/HRM   │     G     ├─╯                    ╰─┤     H     │   J/HRM   │   K/HRM   │   L/HRM   │   :/HRM   │
    ├───────────┼───────────┼───────────┼───────────┼───────────┤╭──────────╮╭──────────╮├───────────┼───────────┼───────────┼───────────┼───────────┤
    │     Z     │     X     │     C     │     V     │     B     ││Play/Pause││   Mute   ││     N     │     M     │     ,     │     .     │     /     │
    └───────────┴───────────┴───────────┼───────────┼───────────┤╰──────────╯╰──────────╯├───────────┼───────────┼───────────┴───────────┴───────────┘
@@ -147,9 +172,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                        └───────────┴───────────┴───────────┘└───────────┴───────────┴───────────┘ */
 
    [_QWERTY] = LAYOUT_saegewerk(
- //╷           ╷           ╷           ╷           ╷           ╷           ╷╷           ╷           ╷           ╷           ╷           ╷           ╷
     KC_Q     ,  KC_W     ,  KC_E     ,  KC_R     ,  KC_T     ,                           KC_Y     ,  KC_U     ,  KC_I     ,  KC_O     ,  KC_P     ,
-    A_HRM    ,  S_HRM    ,  D_HRM    ,  F_HRM    ,  KC_G     ,                           KC_H     ,  J_HRM    ,  K_HRM    ,  L_HRM    ,  SEMI_HRM ,
+    TD_AESC  ,  S_HRM    ,  D_HRM    ,  F_HRM    ,  KC_G     ,                           KC_H     ,  J_HRM    ,  K_HRM    ,  L_HRM    ,  COLON_HRM,
     KC_Z     ,  KC_X     ,  KC_C     ,  KC_V     ,  KC_B     ,  KC_MPLY  ,   KC_MUTE  ,  KC_N     ,  KC_M     ,  KC_COMM  ,  KC_DOT   ,  KC_SLSH  ,
                                         TT(_NAV) ,  NUM_TAB  ,  SFT_ENT  ,   SFT_SPC  ,  SYM      ,  KC_ESC
  ),
@@ -215,7 +239,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    ├───────────┼───────────┼───────────┼───────────┼───────────┤╭──────────╮╭──────────╮├───────────┼───────────┼───────────┼───────────┼───────────┤
    │           │           │           │    F11    │    F12    ││          ││          ││     *     │     1     │     2     │     3     │     _     │
    └───────────┴───────────┴───────────┼───────────┼───────────┤╰──────────╯╰──────────╯├───────────┼───────────┼───────────┴───────────┴───────────┘
-                                       │           │           │           ││           │     0     │           │
+                                       │           │           │           ││           │           │     0     │
                                        └───────────┴───────────┴───────────┘└───────────┴───────────┴───────────┘ */
 
    [_NUM] = LAYOUT_saegewerk(
@@ -223,7 +247,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_F1    ,  KC_F2    ,  KC_F3    ,  KC_F4    ,  KC_F5    ,                           KC_PLUS  ,  KC_7     ,  KC_8     ,  KC_9     ,  KC_CIRC  ,
     KC_F6    ,  KC_F7    ,  KC_F8    ,  KC_F9    ,  KC_F10   ,                           KC_EQUAL ,  KC_4     ,  KC_5     ,  KC_6     ,  KC_MINUS ,
     _______  ,  _______  ,  _______  ,  KC_F11   ,  KC_F12   ,  _______  ,   _______  ,  KC_ASTR  ,  KC_1     ,  KC_2     ,  KC_3     ,  KC_UNDS  ,
-                                        _______  ,  _______  ,  _______  ,   _______  ,  KC_0     ,  _______
+                                        _______  ,  _______  ,  _______  ,   _______  ,  _______  ,  KC_0
  ),
 
  /*
@@ -233,26 +257,46 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    │ n a v i g a t i o n                                       │
    └───────────────────────────────────────────────────────────┘
    ┌───────────┬───────────┬───────────┬───────────┬───────────┐                        ┌───────────┬───────────┬───────────┬───────────┬───────────┐
-   │   Reset   │           │           │           │Clicky togg│ ╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮ │           │     (     │     )     │     {     │     }     │
+   │           │           │           │           │           │ ╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮ │           │     (     │     )     │     {     │     }     │
    ├───────────┼───────────┼───────────┼───────────┼───────────┤ │╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯│ ├───────────┼───────────┼───────────┼───────────┼───────────┤
-   │Bootloader │           │           │           │Incr. click├─╯                    ╰─┤     ←     │     ↓     │     ↑     │     →     │           │
+   │           │           │           │           │           ├─╯                    ╰─┤     ←     │     ↓     │     ↑     │     →     │           │
    ├───────────┼───────────┼───────────┼───────────┼───────────┤╭──────────╮╭──────────╮├───────────┼───────────┼───────────┼───────────┼───────────┤
-   │Make Keymap│           │           │           │Decr. click││Shift + W ││    gg    ││           │     [     │     ]     │           │           │
+   │           │           │           │           │           ││Shift + W ││    gg    ││           │     [     │     ]     │           │           │
    └───────────┴───────────┴───────────┼───────────┼───────────┤╰──────────╯╰──────────╯├───────────┼───────────┼───────────┴───────────┴───────────┘
                                        │Toggle NAV │           │           ││  Delete   │           │           │
                                        └───────────┴───────────┴───────────┘└───────────┴───────────┴───────────┘ */
 
    [_NAV] = LAYOUT_saegewerk(
  //╷           ╷           ╷           ╷           ╷           ╷           ╷╷           ╷           ╷           ╷           ╷           ╷           ╷
-    QK_REBOOT,  _______  ,  _______  ,  _______  ,  CK_TOGG  ,                           _______  ,  KC_LPRN  ,  KC_RPRN  ,  KC_LBRC  ,  KC_RBRC  ,
-    QK_BOOT  ,  _______  ,  _______  ,  _______  ,  CK_UP    ,                           KC_LEFT  ,  KC_DOWN  ,  KC_UP    ,  KC_RIGHT ,  _______  ,
-    MAKE_H   ,  _______  ,  _______  ,  _______  ,  CK_DOWN  ,  S(KC_W)  ,   VIM_TOP  ,  _______  ,  KC_LBRC  ,  KC_RBRC  ,  _______  ,  _______  ,
+    _______  ,  _______  ,  _______  ,  _______  ,  _______  ,                           _______  ,  KC_LPRN  ,  KC_RPRN  ,  KC_LBRC  ,  KC_RBRC  ,
+    _______  ,  _______  ,  _______  ,  _______  ,  _______  ,                           KC_LEFT  ,  KC_DOWN  ,  KC_UP    ,  KC_RIGHT ,  _______  ,
+    _______  ,  _______  ,  _______  ,  _______  ,  _______  ,  S(KC_W)  ,   VIM_TOP  ,  _______  ,  KC_LBRC  ,  KC_RBRC  ,  _______  ,  _______  ,
                                         _______  ,  _______  ,  _______  ,   KC_DEL   ,  _______  ,  _______
- )
+ ),
 
  /*
-   ╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸*/
-   
+   ╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   ┌───────────────────────────────────────────────────────────┐
+   │ a d j u s t                                               │
+   └───────────────────────────────────────────────────────────┘
+   ┌───────────┬───────────┬───────────┬───────────┬───────────┐                        ┌───────────┬───────────┬───────────┬───────────┬───────────┐
+   │   Reset   │           │           │N. RGB mode│           │ ╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮ │Incr. click│           │           │           │           │
+   ├───────────┼───────────┼───────────┼───────────┼───────────┤ │╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯│ ├───────────┼───────────┼───────────┼───────────┼───────────┤
+   │Bootloader │           │           │RGB toggle │           ├─╯                    ╰─┤Clicky togg│           │           │           │           │
+   ├───────────┼───────────┼───────────┼───────────┼───────────┤╭──────────╮╭──────────╮├───────────┼───────────┼───────────┼───────────┼───────────┤
+   │Make Keymap│           │           │P. RGB mode│           ││          ││          ││Decr. click│           │           │           │           │
+   └───────────┴───────────┴───────────┼───────────┼───────────┤╰──────────╯╰──────────╯├───────────┼───────────┼───────────┴───────────┴───────────┘
+                                       │           │           │           ││           │           │           │
+                                       └───────────┴───────────┴───────────┘└───────────┴───────────┴───────────┘ */
+
+   [_ADJ] = LAYOUT_saegewerk(
+ //╷           ╷           ╷           ╷           ╷           ╷           ╷╷           ╷           ╷           ╷           ╷           ╷           ╷
+    QK_REBOOT,  _______  ,  _______  ,  RGB_MOD  ,  _______  ,                           CK_UP    ,  _______  ,  _______  ,  _______  ,  MU_NEXT  ,
+    QK_BOOT  ,  _______  ,  _______  ,  RGB_TOG  ,  _______  ,                           CK_TOGG  ,  _______  ,  _______  ,  _______  ,  MU_TOGG  ,
+    MAKE_H   ,  _______  ,  _______  ,  RGB_RMOD ,  _______  ,  _______  ,   _______  ,  CK_DOWN  ,  _______  ,  _______  ,  _______  ,  AU_NEXT  ,
+                                        _______  ,  _______  ,  _______  ,   _______  ,  _______  ,  _______
+ )
 };
 
 
@@ -266,6 +310,11 @@ void keyboard_post_init_user(void) {
   #if HAPTIC_ENABLE
     haptic_disable(); // disables per key haptic feedback by default
   #endif //HAPTIC ENABLE
+
+  #if RGB_MATRIX_ENABLE
+    rgblight_enable_noeeprom();
+    //rgblight_sethsv_noeeprom(35, 255, 255); // set default RGB color to yellow
+  #endif //RGB_MATRIX_ENABLE
 }
 
 
@@ -614,19 +663,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case SYM:
             if (record->event.pressed) {
                 layer_on(_SYM);
-                /* update_tri_layer(_SYM, _NUM, _NAV); */
+                update_tri_layer(_SYM, _NUM, _ADJ);
             } else {
                 layer_off(_SYM);
-                /* update_tri_layer(_SYM, _NUM, _NAV); */
+                update_tri_layer(_SYM, _NUM, _ADJ);
             }
             return false;
         case NUM:
             if (record->event.pressed) {
                 layer_on(_NUM);
-                /* update_tri_layer(_SYM, _NUM, _NAV); */
+                update_tri_layer(_SYM, _NUM, _ADJ);
             } else {
                 layer_off(_NUM);
-                /* update_tri_layer(_SYM, _NUM, _NAV); */
+                update_tri_layer(_SYM, _NUM, _ADJ);
             }
             return false;
         case NAV:
@@ -644,9 +693,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case MAKE_H:
           if (record->event.pressed) {
             #ifdef KEYBOARD_klor_kb2040
-              SEND_STRING ("qmk compile -kb klor/2040 -km default");
+              SEND_STRING ("qmk compile -kb klor/2040 -km tisse");
             #else 
-              SEND_STRING ("qmk compile -kb klor -km default");
+              SEND_STRING ("qmk compile -kb klor -km tisse");
             #endif
             tap_code(KC_ENTER); 
           } 
