@@ -69,6 +69,8 @@ enum custom_keycodes {
 
 #define SFT_ENT LSFT_T(KC_ENT)
 #define SFT_SPC RSFT_T(KC_SPC)
+#define SFT_TAB LSFT_T(KC_TAB)
+#define SFT_ESC RSFT_T(KC_ESC)
 
 // LAYER-TAP KEYS ├────────────────────────────────────────────┐
 
@@ -76,57 +78,85 @@ enum custom_keycodes {
 #define NUM_TAB LT(_NUM, KC_TAB)
 #define NAV_TAB LT(_NAV, KC_TAB)
 #define SYM_SPC LT(_SYM, KC_SPC)
+#define NAV_ESC LT(_NAV, KC_ESC)
 
 // TAP-DANCE KEYS ├────────────────────────────────────────────┐
 
 #define TD_AESC TD(A_ESC)
 
+// German characters - assuming 'setxkbmap de us' is set in linux
+#define KC_EURO RALT(KC_E)
+#define KC_AE RALT(KC_A)
+#define KC_OE RALT(KC_O)
+#define KC_UE RALT(KC_U)
+#define KC_SZ RALT(KC_S)
+
 // ┌───────────────────────────────────────────────────────────┐
 // │ d e f i n e   t a p   d a n c e   f u n c t i o n s       │
 // └───────────────────────────────────────────────────────────┘
 
-enum {
-  A_ESC = 0
-};
+/* enum { */
+/*   A_ESC = 0 */
+/* }; */
 
-tap_dance_action_t tap_dance_actions[] = {
-  //Tap once for Esc, twice for Caps Lock
-  [A_ESC]  = ACTION_TAP_DANCE_DOUBLE(A_HRM, KC_ESC)
-// Other declarations would go here, separated by commas, if you have them
-};
+/* tap_dance_action_t tap_dance_actions[] = { */
+/*   //Tap once for Esc, twice for Caps Lock */
+/*   [A_ESC]  = ACTION_TAP_DANCE_DOUBLE(A_HRM, KC_ESC) */
+/* // Other declarations would go here, separated by commas, if you have them */
+/* }; */
 
 // ┌───────────────────────────────────────────────────────────┐
 // │ d e f i n e   c o m b o s                                 │
 // └───────────────────────────────────────────────────────────┘
 
+// MODS
 const uint16_t PROGMEM lctl_combo[] = {KC_W, KC_E, COMBO_END};
 const uint16_t PROGMEM rctl_combo[] = {KC_I, KC_O, COMBO_END};
 const uint16_t PROGMEM lgui_combo[] = {D_HRM, S_HRM, COMBO_END};
 const uint16_t PROGMEM rgui_combo[] = {K_HRM, L_HRM, COMBO_END};
 const uint16_t PROGMEM lalt_combo[] = {KC_Q,  KC_W, COMBO_END};
 const uint16_t PROGMEM ralt_combo[] = {KC_O, KC_P, COMBO_END};
+const uint16_t PROGMEM lshiftctl_combo[] = {KC_T, KC_W, KC_E, COMBO_END};
+const uint16_t PROGMEM rshiftctl_combo[] = {KC_Y, KC_I, KC_O, COMBO_END};
 const uint16_t PROGMEM lshiftgui_combo[] = {F_HRM, D_HRM, S_HRM, COMBO_END};
 const uint16_t PROGMEM rshiftgui_combo[] = {J_HRM, K_HRM, L_HRM, COMBO_END};
 const uint16_t PROGMEM esc_combo[] = {KC_F, KC_J, COMBO_END};
 const uint16_t PROGMEM capslock_combo[] = {SFT_ENT, SFT_SPC, COMBO_END};
+// SYMBOLS
+const uint16_t PROGMEM lparenthesis_combo[] = {KC_E, KC_R, COMBO_END};
+const uint16_t PROGMEM rparenthesis_combo[] = {KC_U, KC_I, COMBO_END};
+const uint16_t PROGMEM lbracket_combo[] = {KC_D, KC_F, COMBO_END};
+const uint16_t PROGMEM rbracket_combo[] = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM lcurlybrace_combo[] = {KC_C, KC_V, COMBO_END};
+const uint16_t PROGMEM rcurlybrace_combo[] = {KC_M, KC_COMMA, COMBO_END};
 combo_t key_combos[] = {
+    // MODS
     COMBO(lctl_combo, KC_LCTL),
     COMBO(rctl_combo, KC_RCTL),
     COMBO(lgui_combo, KC_LGUI),
     COMBO(rgui_combo, KC_RGUI),
     COMBO(lalt_combo, KC_LALT),
     COMBO(ralt_combo, KC_RALT),
+    COMBO(lshiftctl_combo, S(KC_LCTL)),
+    COMBO(rshiftctl_combo, S(KC_RCTL)),
     COMBO(lshiftgui_combo, S(KC_LGUI)),
     COMBO(rshiftgui_combo, S(KC_RGUI)),
     COMBO(esc_combo, KC_ESC),
     /* COMBO(capslock_combo, KC_CAPS), */
+    // SYMBOLS
+    COMBO(lparenthesis_combo, KC_LEFT_PAREN),
+    COMBO(rparenthesis_combo, KC_RIGHT_PAREN),
+    COMBO(lbracket_combo, KC_LEFT_BRACKET),
+    COMBO(rbracket_combo, KC_RIGHT_BRACKET),
+    COMBO(lcurlybrace_combo, KC_LEFT_CURLY_BRACE),
+    COMBO(rcurlybrace_combo, KC_RIGHT_CURLY_BRACE),
 };
 
 // ┌───────────────────────────────────────────────────────────┐
 // │ d e f i n e   k e y   o v e r r i d e s                   │
 // └───────────────────────────────────────────────────────────┘
 
-const key_override_t backspace_override = ko_make_basic(MOD_MASK_SHIFT, SFT_SPC, KC_BSPC);
+const key_override_t backspace_override = ko_make_basic(MOD_MASK_SHIFT, SYM_SPC, KC_BSPC);
 const key_override_t flipcolon_override = ko_make_basic(MOD_MASK_SHIFT, KC_COLON, KC_SEMICOLON);
 
 // This globally defines all key overrides to be used ├────────┐
@@ -168,14 +198,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    ├───────────┼───────────┼───────────┼───────────┼───────────┤╭──────────╮╭──────────╮├───────────┼───────────┼───────────┼───────────┼───────────┤
    │     Z     │     X     │     C     │     V     │     B     ││Play/Pause││   Mute   ││     N     │     M     │     ,     │     .     │     /     │
    └───────────┴───────────┴───────────┼───────────┼───────────┤╰──────────╯╰──────────╯├───────────┼───────────┼───────────┴───────────┴───────────┘
-                                       │  TT NAV   │  Tab/NUM  │Enter/Shift││Space/Shift│    SYM    │           │
+                                       │  TT NAV   │ Tab/Shift │ Enter/NUM ││ Space/SYM │   Shift   │  Esc/NAV  │
                                        └───────────┴───────────┴───────────┘└───────────┴───────────┴───────────┘ */
 
    [_QWERTY] = LAYOUT_saegewerk(
     KC_Q     ,  KC_W     ,  KC_E     ,  KC_R     ,  KC_T     ,                           KC_Y     ,  KC_U     ,  KC_I     ,  KC_O     ,  KC_P     ,
-    TD_AESC  ,  S_HRM    ,  D_HRM    ,  F_HRM    ,  KC_G     ,                           KC_H     ,  J_HRM    ,  K_HRM    ,  L_HRM    ,  COLON_HRM,
+    A_HRM    ,  S_HRM    ,  D_HRM    ,  F_HRM    ,  KC_G     ,                           KC_H     ,  J_HRM    ,  K_HRM    ,  L_HRM    ,  COLON_HRM,
     KC_Z     ,  KC_X     ,  KC_C     ,  KC_V     ,  KC_B     ,  KC_MPLY  ,   KC_MUTE  ,  KC_N     ,  KC_M     ,  KC_COMM  ,  KC_DOT   ,  KC_SLSH  ,
-                                        TT(_NAV) ,  NUM_TAB  ,  SFT_ENT  ,   SFT_SPC  ,  SYM      ,  KC_ESC
+                                        TT(_NAV) ,  SFT_TAB  ,  NUM_ENT  ,   SYM_SPC  ,  KC_RSFT  ,  NAV_ESC
  ),
 
  /*
@@ -215,7 +245,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    ├───────────┼───────────┼───────────┼───────────┼───────────┤╭──────────╮╭──────────╮├───────────┼───────────┼───────────┼───────────┼───────────┤
    │           │           │     |     │     &     │           ││          ││          ││           │           │           │           │           │
    └───────────┴───────────┴───────────┼───────────┼───────────┤╰──────────╯╰──────────╯├───────────┼───────────┼───────────┴───────────┴───────────┘
-                                       │           │           │     \     ││           │           │           │
+                                       │           │     \     │           ││           │           │           │
                                        └───────────┴───────────┴───────────┘└───────────┴───────────┴───────────┘ */
 
    [_SYM] = LAYOUT_saegewerk(
@@ -223,7 +253,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TILD  ,  KC_GRAVE ,  KC_QUOT  ,  KC_DQUO  ,  _______  ,                           _______  ,  _______  ,  _______  ,  _______  ,  _______  ,
     KC_EXLM  ,  KC_AT    ,  KC_HASH  ,  KC_DOLLAR,  KC_PERC  ,                           _______  ,  _______  ,  _______  ,  _______  ,  _______  ,
     _______  ,  _______  ,  KC_PIPE  ,  KC_AMPR  ,  _______  ,  _______  ,   _______  ,  _______  ,  _______  ,  _______  ,  _______  ,  _______  ,
-                                        _______  ,  _______  ,  KC_BSLS  ,   _______  ,  _______  ,  _______
+                                        _______  ,  KC_BSLS  ,  _______  ,   _______  ,  _______  ,  _______
  ),
 
  /*
@@ -265,11 +295,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    └───────────┴───────────┴───────────┼───────────┼───────────┤╰──────────╯╰──────────╯├───────────┼───────────┼───────────┴───────────┴───────────┘
                                        │Toggle NAV │           │           ││  Delete   │           │           │
                                        └───────────┴───────────┴───────────┘└───────────┴───────────┴───────────┘ */
-
    [_NAV] = LAYOUT_saegewerk(
  //╷           ╷           ╷           ╷           ╷           ╷           ╷╷           ╷           ╷           ╷           ╷           ╷           ╷
-    _______  ,  _______  ,  _______  ,  _______  ,  _______  ,                           _______  ,  KC_LPRN  ,  KC_RPRN  ,  KC_LBRC  ,  KC_RBRC  ,
-    _______  ,  _______  ,  _______  ,  _______  ,  _______  ,                           KC_LEFT  ,  KC_DOWN  ,  KC_UP    ,  KC_RIGHT ,  _______  ,
+    _______  ,  _______  ,  KC_EURO  ,  _______  ,  _______  ,                           _______  ,  KC_UE    ,  _______  ,  KC_OE    ,  _______  ,
+    KC_AE    ,  KC_SZ    ,  _______  ,  _______  ,  _______  ,                           KC_LEFT  ,  KC_DOWN  ,  KC_UP    ,  KC_RIGHT ,  _______  ,
     _______  ,  _______  ,  _______  ,  _______  ,  _______  ,  S(KC_W)  ,   VIM_TOP  ,  _______  ,  KC_LBRC  ,  KC_RBRC  ,  _______  ,  _______  ,
                                         _______  ,  _______  ,  _______  ,   KC_DEL   ,  _______  ,  _______
  ),
@@ -489,17 +518,20 @@ layer_state_t layer_state_set_kb(layer_state_t state) {
             case 0:
                 strcpy ( layer_state_str, "BASE QWERTY");
                 break;
+            /* case 1: */
+            /*     strcpy ( layer_state_str, "BASE COLEMAK"); */
+            /*     break; */
             case 1:
-                strcpy ( layer_state_str, "BASE COLEMAK");
-                break;
-            case 2:
                 strcpy ( layer_state_str, "SYMBOL");
                 break;
-            case 3:
+            case 2:
                 strcpy ( layer_state_str, "NUMBERS");
                 break;
-            case 4:
+            case 3:
                 strcpy ( layer_state_str, "NAVIGATION");
+                break;
+            case 4:
+                strcpy ( layer_state_str, "ADJUSTMENT");
                 break;
             default:
                 strcpy ( layer_state_str, "XXXXXX");
@@ -507,8 +539,8 @@ layer_state_t layer_state_set_kb(layer_state_t state) {
       if (dmacro_num < 1) {
           strcpy ( o_text, layer_state_str );
     }
-    return state;
-    /* return update_tri_layer_state(state, _NUM, _SYM, _NAV); */
+    /* return state; */
+    return update_tri_layer_state(state, _NUM, _SYM, _ADJ);
 }
 
 
@@ -732,9 +764,9 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 0) {
       if(IS_LAYER_ON(_NAV)){
         if (clockwise) {
-            tap_code(KC_PGDN);
+            tap_code(KC_DOT);
         } else {
-            tap_code(KC_PGUP);
+            tap_code(KC_COMMA);
         }
       } else {
         if (clockwise) {
@@ -763,7 +795,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
         }
       }
     }
-    return true;
+    return false;
 }
 
 #endif // ENCODER_ENABLE
