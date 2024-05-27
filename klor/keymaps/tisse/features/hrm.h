@@ -86,23 +86,23 @@
     #elif POS_HRM_CTL == 2
         #ifdef ENABLE_HRM_CTL
             #define S_HRM MT(MOD_LCTL, KC_S)
-            #define L_HRM MT(MOD_CTRL, KC_L)
+            #define L_HRM MT(MOD_RCTL, KC_L)
         #else
             #define S_HRM KC_S
             #define L_HRM KC_L
         #endif
     #elif POS_HRM_CTL == 3
-        #ifdef ENABLE_HRM_ALT
+        #ifdef ENABLE_HRM_CTL
             #define D_HRM MT(MOD_LCTL, KC_D)
-            #define K_HRM MT(MOD_CTRL, KC_K)
+            #define K_HRM MT(MOD_RCTL, KC_K)
         #else
             #define D_HRM KC_D
             #define K_HRM KC_K
         #endif
     #elif POS_HRM_CTL == 4
-        #ifdef ENABLE_HRM_ALT
+        #ifdef ENABLE_HRM_CTL
             #define F_HRM MT(MOD_LCTL, KC_F)
-            #define J_HRM MT(MOD_CTRL, KC_J)
+            #define J_HRM MT(MOD_RCTL, KC_J)
         #else
             #define F_HRM KC_F
             #define J_HRM KC_J

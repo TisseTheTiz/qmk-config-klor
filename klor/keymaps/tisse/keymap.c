@@ -53,12 +53,17 @@ enum custom_keycodes {
     NUM,
     NAV,
     OS_SWAP,
-    MAKE_H,
     SHT_T,
     SHT_N,
+    MAKE_H,
     VIM_TOP,
     VIM_INC,
     VIM_DEC,
+    MACRO_PARENTHESES,
+    MACRO_BRACKETS,
+    MACRO_CURLYBRACES,
+    MACRO_SINGLEQUOTES,
+    MACRO_DOUBLEQUOTES,
 };
 //
 // ┌───────────────────────────────────────────────────────────┐
@@ -67,8 +72,8 @@ enum custom_keycodes {
 
 // MOD-TAP KEYS ├──────────────────────────────────────────────┐
 
-#define SFT_ENT LSFT_T(KC_ENT)
-#define SFT_SPC RSFT_T(KC_SPC)
+/* #define SFT_ENT LSFT_T(KC_ENT) */
+/* #define SFT_SPC RSFT_T(KC_SPC) */
 #define SFT_TAB LSFT_T(KC_TAB)
 #define SFT_ESC RSFT_T(KC_ESC)
 
@@ -109,47 +114,51 @@ enum custom_keycodes {
 // │ d e f i n e   c o m b o s                                 │
 // └───────────────────────────────────────────────────────────┘
 
+
+
+
+
 // MODS
-const uint16_t PROGMEM lctl_combo[] = {KC_W, KC_E, COMBO_END};
-const uint16_t PROGMEM rctl_combo[] = {KC_I, KC_O, COMBO_END};
-const uint16_t PROGMEM lgui_combo[] = {D_HRM, S_HRM, COMBO_END};
-const uint16_t PROGMEM rgui_combo[] = {K_HRM, L_HRM, COMBO_END};
-const uint16_t PROGMEM lalt_combo[] = {KC_Q,  KC_W, COMBO_END};
-const uint16_t PROGMEM ralt_combo[] = {KC_O, KC_P, COMBO_END};
-const uint16_t PROGMEM lshiftctl_combo[] = {KC_T, KC_W, KC_E, COMBO_END};
-const uint16_t PROGMEM rshiftctl_combo[] = {KC_Y, KC_I, KC_O, COMBO_END};
-const uint16_t PROGMEM lshiftgui_combo[] = {F_HRM, D_HRM, S_HRM, COMBO_END};
-const uint16_t PROGMEM rshiftgui_combo[] = {J_HRM, K_HRM, L_HRM, COMBO_END};
-const uint16_t PROGMEM esc_combo[] = {KC_F, KC_J, COMBO_END};
-const uint16_t PROGMEM capslock_combo[] = {SFT_ENT, SFT_SPC, COMBO_END};
+const uint16_t PROGMEM esc_combo[] = {F_HRM, J_HRM, COMBO_END};
+const uint16_t PROGMEM capslock_combo[] = {KC_Q, KC_P, COMBO_END};
+
 // SYMBOLS
-const uint16_t PROGMEM lparenthesis_combo[] = {KC_E, KC_R, COMBO_END};
-const uint16_t PROGMEM rparenthesis_combo[] = {KC_U, KC_I, COMBO_END};
-const uint16_t PROGMEM lbracket_combo[] = {KC_D, KC_F, COMBO_END};
-const uint16_t PROGMEM rbracket_combo[] = {KC_J, KC_K, COMBO_END};
-const uint16_t PROGMEM lcurlybrace_combo[] = {KC_C, KC_V, COMBO_END};
-const uint16_t PROGMEM rcurlybrace_combo[] = {KC_M, KC_COMMA, COMBO_END};
+const uint16_t PROGMEM lparenthesis_combo[] = {J_HRM, K_HRM, COMBO_END};
+const uint16_t PROGMEM rparenthesis_combo[] = {K_HRM, L_HRM, COMBO_END};
+const uint16_t PROGMEM parentheses_combo[] = {J_HRM, L_HRM, COMBO_END};
+const uint16_t PROGMEM lbracket_combo[] = {KC_U, KC_I, COMBO_END};
+const uint16_t PROGMEM rbracket_combo[] = {KC_I, KC_O, COMBO_END};
+const uint16_t PROGMEM brackets_combo[] = {KC_U, KC_O, COMBO_END};
+const uint16_t PROGMEM lcurlybrace_combo[] = {KC_M, KC_COMMA, COMBO_END};
+const uint16_t PROGMEM rcurlybrace_combo[] = {KC_COMMA, KC_DOT, COMBO_END};
+const uint16_t PROGMEM curlybraces_combo[] = {KC_M, KC_DOT, COMBO_END};
+const uint16_t PROGMEM onesinglequote_combo[] = {KC_W, KC_E, COMBO_END};
+const uint16_t PROGMEM grave_combo[] = {KC_E, KC_R, COMBO_END};
+const uint16_t PROGMEM singlequotes_combo[] = {KC_W, KC_R, COMBO_END};
+const uint16_t PROGMEM onedoublequote_combo[] = {S_HRM, D_HRM, COMBO_END};
+const uint16_t PROGMEM doublequotes_combo[] = {S_HRM, F_HRM, COMBO_END};
+const uint16_t PROGMEM backslash_combo[] = {D_HRM, F_HRM, COMBO_END};
 combo_t key_combos[] = {
     // MODS
-    COMBO(lctl_combo, KC_LCTL),
-    COMBO(rctl_combo, KC_RCTL),
-    COMBO(lgui_combo, KC_LGUI),
-    COMBO(rgui_combo, KC_RGUI),
-    COMBO(lalt_combo, KC_LALT),
-    COMBO(ralt_combo, KC_RALT),
-    COMBO(lshiftctl_combo, S(KC_LCTL)),
-    COMBO(rshiftctl_combo, S(KC_RCTL)),
-    COMBO(lshiftgui_combo, S(KC_LGUI)),
-    COMBO(rshiftgui_combo, S(KC_RGUI)),
     COMBO(esc_combo, KC_ESC),
-    /* COMBO(capslock_combo, KC_CAPS), */
+    COMBO(capslock_combo, KC_CAPS),
+
     // SYMBOLS
     COMBO(lparenthesis_combo, KC_LEFT_PAREN),
     COMBO(rparenthesis_combo, KC_RIGHT_PAREN),
+    COMBO(parentheses_combo, MACRO_PARENTHESES),
     COMBO(lbracket_combo, KC_LEFT_BRACKET),
     COMBO(rbracket_combo, KC_RIGHT_BRACKET),
+    COMBO(brackets_combo, MACRO_BRACKETS),
     COMBO(lcurlybrace_combo, KC_LEFT_CURLY_BRACE),
     COMBO(rcurlybrace_combo, KC_RIGHT_CURLY_BRACE),
+    COMBO(curlybraces_combo, MACRO_CURLYBRACES),
+    COMBO(onesinglequote_combo, KC_QUOTE),
+    COMBO(grave_combo, KC_GRAVE),
+    COMBO(singlequotes_combo, MACRO_SINGLEQUOTES),
+    COMBO(onedoublequote_combo, KC_DOUBLE_QUOTE),
+    COMBO(doublequotes_combo, MACRO_DOUBLEQUOTES),
+    COMBO(backslash_combo, KC_BACKSLASH),
 };
 
 // ┌───────────────────────────────────────────────────────────┐
@@ -250,10 +259,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
    [_SYM] = LAYOUT_saegewerk(
  //╷           ╷           ╷           ╷           ╷           ╷           ╷╷           ╷           ╷           ╷           ╷           ╷           ╷
-    KC_TILD  ,  KC_GRAVE ,  KC_QUOT  ,  KC_DQUO  ,  _______  ,                           _______  ,  _______  ,  _______  ,  _______  ,  _______  ,
+    KC_TILD  ,  _______  ,  _______  ,  _______  ,  _______  ,                           _______  ,  _______  ,  _______  ,  _______  ,  _______  ,
     KC_EXLM  ,  KC_AT    ,  KC_HASH  ,  KC_DOLLAR,  KC_PERC  ,                           _______  ,  _______  ,  _______  ,  _______  ,  _______  ,
     _______  ,  _______  ,  KC_PIPE  ,  KC_AMPR  ,  _______  ,  _______  ,   _______  ,  _______  ,  _______  ,  _______  ,  _______  ,  _______  ,
-                                        _______  ,  KC_BSLS  ,  _______  ,   _______  ,  _______  ,  _______
+                                        _______  ,  _______  ,  _______  ,   _______  ,  _______  ,  _______
  ),
 
  /*
@@ -269,7 +278,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    ├───────────┼───────────┼───────────┼───────────┼───────────┤╭──────────╮╭──────────╮├───────────┼───────────┼───────────┼───────────┼───────────┤
    │           │           │           │    F11    │    F12    ││          ││          ││     *     │     1     │     2     │     3     │     _     │
    └───────────┴───────────┴───────────┼───────────┼───────────┤╰──────────╯╰──────────╯├───────────┼───────────┼───────────┴───────────┴───────────┘
-                                       │           │           │           ││           │           │     0     │
+                                       │           │           │           ││           │     0     │           │
                                        └───────────┴───────────┴───────────┘└───────────┴───────────┴───────────┘ */
 
    [_NUM] = LAYOUT_saegewerk(
@@ -277,7 +286,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_F1    ,  KC_F2    ,  KC_F3    ,  KC_F4    ,  KC_F5    ,                           KC_PLUS  ,  KC_7     ,  KC_8     ,  KC_9     ,  KC_CIRC  ,
     KC_F6    ,  KC_F7    ,  KC_F8    ,  KC_F9    ,  KC_F10   ,                           KC_EQUAL ,  KC_4     ,  KC_5     ,  KC_6     ,  KC_MINUS ,
     _______  ,  _______  ,  _______  ,  KC_F11   ,  KC_F12   ,  _______  ,   _______  ,  KC_ASTR  ,  KC_1     ,  KC_2     ,  KC_3     ,  KC_UNDS  ,
-                                        _______  ,  _______  ,  _______  ,   _______  ,  _______  ,  KC_0
+                                        _______  ,  _______  ,  _______  ,   _______  ,  KC_0     ,  _______
  ),
 
  /*
@@ -310,20 +319,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    │ a d j u s t                                               │
    └───────────────────────────────────────────────────────────┘
    ┌───────────┬───────────┬───────────┬───────────┬───────────┐                        ┌───────────┬───────────┬───────────┬───────────┬───────────┐
-   │   Reset   │           │           │N. RGB mode│           │ ╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮ │Incr. click│           │           │           │           │
+   │   Reset   │           │           │Tap. Term ↑│           │ ╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮ │Cli. freq ↑│           │RGB mode ↑ │           │Mus. mode →│
    ├───────────┼───────────┼───────────┼───────────┼───────────┤ │╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯│ ├───────────┼───────────┼───────────┼───────────┼───────────┤
-   │Bootloader │           │           │RGB toggle │           ├─╯                    ╰─┤Clicky togg│           │           │           │           │
+   │Bootloader │           │           │Print TapT.│           ├─╯                    ╰─┤Tog. Clicky│           │RGB toggle │           │Tog. Music │
    ├───────────┼───────────┼───────────┼───────────┼───────────┤╭──────────╮╭──────────╮├───────────┼───────────┼───────────┼───────────┼───────────┤
-   │Make Keymap│           │           │P. RGB mode│           ││          ││          ││Decr. click│           │           │           │           │
+   │Make Keymap│           │           │Tap. Term ↓│           ││          ││          ││Cli. freq ↓│           │RGB mode ↓ │           │Aud. mode →│
    └───────────┴───────────┴───────────┼───────────┼───────────┤╰──────────╯╰──────────╯├───────────┼───────────┼───────────┴───────────┴───────────┘
                                        │           │           │           ││           │           │           │
                                        └───────────┴───────────┴───────────┘└───────────┴───────────┴───────────┘ */
 
    [_ADJ] = LAYOUT_saegewerk(
  //╷           ╷           ╷           ╷           ╷           ╷           ╷╷           ╷           ╷           ╷           ╷           ╷           ╷
-    QK_REBOOT,  _______  ,  _______  ,  RGB_MOD  ,  _______  ,                           CK_UP    ,  _______  ,  _______  ,  _______  ,  MU_NEXT  ,
-    QK_BOOT  ,  _______  ,  _______  ,  RGB_TOG  ,  _______  ,                           CK_TOGG  ,  _______  ,  _______  ,  _______  ,  MU_TOGG  ,
-    MAKE_H   ,  _______  ,  _______  ,  RGB_RMOD ,  _______  ,  _______  ,   _______  ,  CK_DOWN  ,  _______  ,  _______  ,  _______  ,  AU_NEXT  ,
+    QK_REBOOT,  _______  ,  _______  ,  DT_UP    ,  _______  ,                           CK_UP    ,  _______  ,  RGB_MOD  ,  _______  ,  MU_NEXT  ,
+    QK_BOOT  ,  _______  ,  _______  ,  DT_PRNT  ,  _______  ,                           CK_TOGG  ,  _______  ,  RGB_TOG  ,  _______  ,  MU_TOGG  ,
+    MAKE_H   ,  _______  ,  _______  ,  DT_DOWN  ,  _______  ,  _______  ,   _______  ,  CK_DOWN  ,  _______  ,  RGB_RMOD ,  _______  ,  AU_NEXT  ,
                                         _______  ,  _______  ,  _______  ,   _______  ,  _______  ,  _______
  )
 };
@@ -630,6 +639,51 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_achordion(keycode, record)) { return false; }
     switch (keycode) {
+
+
+// ┌───────────────────────────────────────────────────────────┐
+// │ p r o g r a m m i n g                                     │
+// └───────────────────────────────────────────────────────────┘
+
+        case MACRO_PARENTHESES:
+            if (record->event.pressed) {
+                tap_code16(KC_LEFT_PAREN);
+                tap_code16(KC_RIGHT_PAREN);
+                tap_code(KC_LEFT);
+            }
+            break;
+        case MACRO_BRACKETS:
+            if (record->event.pressed) {
+                tap_code(KC_LEFT_BRACKET);
+                tap_code(KC_RIGHT_BRACKET);
+                tap_code(KC_LEFT);
+            }
+            break;
+        case MACRO_CURLYBRACES:
+            if (record->event.pressed) {
+                tap_code16(KC_LEFT_CURLY_BRACE);
+                tap_code16(KC_RIGHT_CURLY_BRACE);
+                tap_code(KC_LEFT);
+            }
+            break;
+        case MACRO_SINGLEQUOTES:
+            if (record->event.pressed) {
+                tap_code(KC_QUOTE);
+                tap_code(KC_QUOTE);
+                tap_code(KC_LEFT);
+            }
+            break;
+        case MACRO_DOUBLEQUOTES:
+            if (record->event.pressed) {
+                tap_code16(KC_DOUBLE_QUOTE);
+                tap_code16(KC_DOUBLE_QUOTE);
+                tap_code(KC_LEFT);
+            }
+            break;
+
+// ┌───────────────────────────────────────────────────────────┐
+// │ v i                                                       │
+// └───────────────────────────────────────────────────────────┘
 
         case VIM_TOP:
             if (record->event.pressed) {
