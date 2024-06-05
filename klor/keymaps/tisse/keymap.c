@@ -137,7 +137,7 @@ const uint16_t PROGMEM grave_combo[] = {KC_E, KC_R, COMBO_END};
 const uint16_t PROGMEM singlequotes_combo[] = {KC_W, KC_R, COMBO_END};
 const uint16_t PROGMEM onedoublequote_combo[] = {S_HRM, D_HRM, COMBO_END};
 const uint16_t PROGMEM doublequotes_combo[] = {S_HRM, F_HRM, COMBO_END};
-const uint16_t PROGMEM backslash_combo[] = {D_HRM, F_HRM, COMBO_END};
+const uint16_t PROGMEM tilde_combo[] = {D_HRM, F_HRM, COMBO_END};
 combo_t key_combos[] = {
     // MODS
     COMBO(esc_combo, KC_ESC),
@@ -158,7 +158,7 @@ combo_t key_combos[] = {
     COMBO(singlequotes_combo, MACRO_SINGLEQUOTES),
     COMBO(onedoublequote_combo, KC_DOUBLE_QUOTE),
     COMBO(doublequotes_combo, MACRO_DOUBLEQUOTES),
-    COMBO(backslash_combo, KC_BACKSLASH),
+    COMBO(tilde_combo, KC_TILDE),
 };
 
 // ┌───────────────────────────────────────────────────────────┐
