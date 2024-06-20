@@ -76,18 +76,24 @@ enum custom_keycodes {
 /* #define SFT_SPC RSFT_T(KC_SPC) */
 #define SFT_TAB LSFT_T(KC_TAB)
 #define SFT_ESC RSFT_T(KC_ESC)
+#define SFT_BSP RSFT_T(KC_BSPC)
 
 // LAYER-TAP KEYS ├────────────────────────────────────────────┐
 
 #define NUM_ENT LT(_NUM, KC_ENT)
 #define NUM_TAB LT(_NUM, KC_TAB)
 #define NAV_TAB LT(_NAV, KC_TAB)
+#define NAV_BSP LT(_NAV, KC_BSPC)
 #define SYM_SPC LT(_SYM, KC_SPC)
 #define NAV_ESC LT(_NAV, KC_ESC)
 
 // TAP-DANCE KEYS ├────────────────────────────────────────────┐
 
 #define TD_AESC TD(A_ESC)
+
+// ONE-SHOT KEYS ├────────────────────────────────────────────┐
+
+#define OSM_SFT OSM(MOD_LSFT)
 
 // German characters - assuming 'setxkbmap de us' is set in linux
 #define KC_EURO RALT(KC_E)
@@ -114,63 +120,68 @@ enum custom_keycodes {
 // │ d e f i n e   c o m b o s                                 │
 // └───────────────────────────────────────────────────────────┘
 
-
-
-
-
 // MODS
-const uint16_t PROGMEM esc_combo[] = {F_HRM, J_HRM, COMBO_END};
+const uint16_t PROGMEM esc_onehand_combo[] = {S_HRM, D_HRM, COMBO_END};
+const uint16_t PROGMEM esc_twohand_combo[] = {F_HRM, J_HRM, COMBO_END};
 const uint16_t PROGMEM capslock_combo[] = {KC_Q, KC_P, COMBO_END};
 
 // SYMBOLS
-const uint16_t PROGMEM lparenthesis_combo[] = {J_HRM, K_HRM, COMBO_END};
-const uint16_t PROGMEM rparenthesis_combo[] = {K_HRM, L_HRM, COMBO_END};
-const uint16_t PROGMEM parentheses_combo[] = {J_HRM, L_HRM, COMBO_END};
-const uint16_t PROGMEM lbracket_combo[] = {KC_U, KC_I, COMBO_END};
-const uint16_t PROGMEM rbracket_combo[] = {KC_I, KC_O, COMBO_END};
-const uint16_t PROGMEM brackets_combo[] = {KC_U, KC_O, COMBO_END};
-const uint16_t PROGMEM lcurlybrace_combo[] = {KC_M, KC_COMMA, COMBO_END};
-const uint16_t PROGMEM rcurlybrace_combo[] = {KC_COMMA, KC_DOT, COMBO_END};
-const uint16_t PROGMEM curlybraces_combo[] = {KC_M, KC_DOT, COMBO_END};
-const uint16_t PROGMEM onesinglequote_combo[] = {KC_W, KC_E, COMBO_END};
-const uint16_t PROGMEM grave_combo[] = {KC_E, KC_R, COMBO_END};
-const uint16_t PROGMEM singlequotes_combo[] = {KC_W, KC_R, COMBO_END};
-const uint16_t PROGMEM onedoublequote_combo[] = {S_HRM, D_HRM, COMBO_END};
-const uint16_t PROGMEM doublequotes_combo[] = {S_HRM, F_HRM, COMBO_END};
-const uint16_t PROGMEM tilde_combo[] = {D_HRM, F_HRM, COMBO_END};
+const uint16_t PROGMEM plus_combo[] = {J_HRM, K_HRM, COMBO_END};
+const uint16_t PROGMEM minus_combo[] = {K_HRM, L_HRM, COMBO_END};
+const uint16_t PROGMEM underscore_combo[] = {J_HRM, K_HRM, L_HRM, COMBO_END};
+const uint16_t PROGMEM asterisk_combo[] = {KC_M, KC_COMMA, COMBO_END};
+const uint16_t PROGMEM equal_combo[] = {KC_COMMA, KC_DOT, COMBO_END};
+const uint16_t PROGMEM singlequote_combo[] = {KC_U, KC_I, COMBO_END};
+const uint16_t PROGMEM doublequote_combo[] = {KC_I, KC_O, COMBO_END};
+/* const uint16_t PROGMEM lparenthesis_combo[] = {J_HRM, K_HRM, COMBO_END}; */
+/* const uint16_t PROGMEM rparenthesis_combo[] = {K_HRM, L_HRM, COMBO_END}; */
+/* const uint16_t PROGMEM parentheses_combo[] = {J_HRM, L_HRM, COMBO_END}; */
+/* const uint16_t PROGMEM lbracket_combo[] = {KC_M, KC_COMMA, COMBO_END}; */
+/* const uint16_t PROGMEM rbracket_combo[] = {KC_COMMA, KC_DOT, COMBO_END}; */
+/* const uint16_t PROGMEM brackets_combo[] = {KC_M, KC_DOT, COMBO_END}; */
+/* const uint16_t PROGMEM lcurlybrace_combo[] = {KC_4, KC_5, COMBO_END}; */
+/* const uint16_t PROGMEM rcurlybrace_combo[] = {KC_5, KC_6, COMBO_END}; */
+/* const uint16_t PROGMEM curlybraces_combo[] = {KC_4, KC_6, COMBO_END}; */
+/* const uint16_t PROGMEM singlequotes_combo[] = {KC_W, KC_R, COMBO_END}; */
+/* const uint16_t PROGMEM doublequotes_combo[] = {S_HRM, F_HRM, COMBO_END}; */
 combo_t key_combos[] = {
     // MODS
-    COMBO(esc_combo, KC_ESC),
+    COMBO(esc_onehand_combo, KC_ESC),
+    COMBO(esc_twohand_combo, KC_ESC),
     COMBO(capslock_combo, KC_CAPS),
 
     // SYMBOLS
-    COMBO(lparenthesis_combo, KC_LEFT_PAREN),
-    COMBO(rparenthesis_combo, KC_RIGHT_PAREN),
-    COMBO(parentheses_combo, MACRO_PARENTHESES),
-    COMBO(lbracket_combo, KC_LEFT_BRACKET),
-    COMBO(rbracket_combo, KC_RIGHT_BRACKET),
-    COMBO(brackets_combo, MACRO_BRACKETS),
-    COMBO(lcurlybrace_combo, KC_LEFT_CURLY_BRACE),
-    COMBO(rcurlybrace_combo, KC_RIGHT_CURLY_BRACE),
-    COMBO(curlybraces_combo, MACRO_CURLYBRACES),
-    COMBO(onesinglequote_combo, KC_QUOTE),
-    COMBO(grave_combo, KC_GRAVE),
-    COMBO(singlequotes_combo, MACRO_SINGLEQUOTES),
-    COMBO(onedoublequote_combo, KC_DOUBLE_QUOTE),
-    COMBO(doublequotes_combo, MACRO_DOUBLEQUOTES),
-    COMBO(tilde_combo, KC_TILDE),
+    COMBO(plus_combo, KC_PLUS),
+    COMBO(minus_combo, KC_MINUS),
+    COMBO(underscore_combo, KC_UNDS),
+    COMBO(asterisk_combo, KC_ASTERISK),
+    COMBO(equal_combo, KC_EQUAL),
+    COMBO(singlequote_combo, KC_QUOTE),
+    COMBO(doublequote_combo, KC_DOUBLE_QUOTE),
+    /* COMBO(lparenthesis_combo, KC_LEFT_PAREN), */
+    /* COMBO(rparenthesis_combo, KC_RIGHT_PAREN), */
+    /* COMBO(parentheses_combo, MACRO_PARENTHESES), */
+    /* COMBO(lbracket_combo, KC_LEFT_BRACKET), */
+    /* COMBO(rbracket_combo, KC_RIGHT_BRACKET), */
+    /* COMBO(brackets_combo, MACRO_BRACKETS), */
+    /* COMBO(lcurlybrace_combo, KC_LEFT_CURLY_BRACE), */
+    /* COMBO(rcurlybrace_combo, KC_RIGHT_CURLY_BRACE), */
+    /* COMBO(curlybraces_combo, MACRO_CURLYBRACES), */
+    /* COMBO(singlequotes_combo, MACRO_SINGLEQUOTES), */
+    /* COMBO(doublequotes_combo, MACRO_DOUBLEQUOTES), */
 };
 
 // ┌───────────────────────────────────────────────────────────┐
 // │ d e f i n e   k e y   o v e r r i d e s                   │
 // └───────────────────────────────────────────────────────────┘
 
-const key_override_t backspace_override = ko_make_basic(MOD_MASK_SHIFT, SYM_SPC, KC_BSPC);
+/* const key_override_t backspace_override = ko_make_basic(MOD_MASK_SHIFT, SYM_SPC, KC_BSPC); */
+const key_override_t delete_override = ko_make_basic(MOD_MASK_SHIFT, NAV_BSP, KC_DEL);
 const key_override_t flipcolon_override = ko_make_basic(MOD_MASK_SHIFT, KC_COLON, KC_SEMICOLON);
 
 // This globally defines all key overrides to be used ├────────┐
 const key_override_t **key_overrides = (const key_override_t *[]){
-  &backspace_override,
+  &delete_override,
   &flipcolon_override,
   NULL // Null terminate the array of overrides!
 };
@@ -214,7 +225,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_Q     ,  KC_W     ,  KC_E     ,  KC_R     ,  KC_T     ,                           KC_Y     ,  KC_U     ,  KC_I     ,  KC_O     ,  KC_P     ,
     A_HRM    ,  S_HRM    ,  D_HRM    ,  F_HRM    ,  KC_G     ,                           KC_H     ,  J_HRM    ,  K_HRM    ,  L_HRM    ,  COLON_HRM,
     KC_Z     ,  KC_X     ,  KC_C     ,  KC_V     ,  KC_B     ,  KC_MPLY  ,   KC_MUTE  ,  KC_N     ,  KC_M     ,  KC_COMM  ,  KC_DOT   ,  KC_SLSH  ,
-                                        TT(_NAV) ,  SFT_TAB  ,  NUM_ENT  ,   SYM_SPC  ,  KC_RSFT  ,  NAV_ESC
+                                        XXXXXXX  ,  NAV_TAB  ,  NUM_ENT  ,   SYM_SPC  ,  NAV_BSP  ,  XXXXXXX
  ),
 
  /*
@@ -248,18 +259,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    │ s y m b o l s                                             │
    └───────────────────────────────────────────────────────────┘
    ┌───────────┬───────────┬───────────┬───────────┬───────────┐                        ┌───────────┬───────────┬───────────┬───────────┬───────────┐
-   │     ~     │     `     │     '     │     "     │           │ ╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮ │           │           │           │           │           │
+   │     ~     │     `     │           │     ^     │           │ ╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮ │           │           │           │           │           │
    ├───────────┼───────────┼───────────┼───────────┼───────────┤ │╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯│ ├───────────┼───────────┼───────────┼───────────┼───────────┤
    │     !     │     @     │     #     │     $     │     %     ├─╯                    ╰─┤           │           │           │           │           │
    ├───────────┼───────────┼───────────┼───────────┼───────────┤╭──────────╮╭──────────╮├───────────┼───────────┼───────────┼───────────┼───────────┤
    │           │           │     |     │     &     │           ││          ││          ││           │           │           │           │           │
    └───────────┴───────────┴───────────┼───────────┼───────────┤╰──────────╯╰──────────╯├───────────┼───────────┼───────────┴───────────┴───────────┘
-                                       │           │     \     │           ││           │           │           │
+                                       │           │           │           ││           │           │           │
                                        └───────────┴───────────┴───────────┘└───────────┴───────────┴───────────┘ */
 
    [_SYM] = LAYOUT_saegewerk(
  //╷           ╷           ╷           ╷           ╷           ╷           ╷╷           ╷           ╷           ╷           ╷           ╷           ╷
-    KC_TILD  ,  _______  ,  _______  ,  _______  ,  _______  ,                           _______  ,  _______  ,  _______  ,  _______  ,  _______  ,
+    KC_TILD  ,  KC_GRV   ,  _______  ,  KC_CIRC  ,  _______  ,                           _______  ,  _______  ,  _______  ,  _______  ,  _______  ,
     KC_EXLM  ,  KC_AT    ,  KC_HASH  ,  KC_DOLLAR,  KC_PERC  ,                           _______  ,  _______  ,  _______  ,  _______  ,  _______  ,
     _______  ,  _______  ,  KC_PIPE  ,  KC_AMPR  ,  _______  ,  _______  ,   _______  ,  _______  ,  _______  ,  _______  ,  _______  ,  _______  ,
                                         _______  ,  _______  ,  _______  ,   _______  ,  _______  ,  _______
@@ -272,21 +283,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    │ n u m b e r s                                             │
    └───────────────────────────────────────────────────────────┘
    ┌───────────┬───────────┬───────────┬───────────┬───────────┐                        ┌───────────┬───────────┬───────────┬───────────┬───────────┐
-   │    F1     │    F2     │    F3     │    F4     │    F5     │ ╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮ │     +     │     7     │     8     │     9     │     ^     │
+   │    F1     │    F2     │    F3     │    F4     │    F5     │ ╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮ │     [     │     7     │     8     │     9     │     ]     │
    ├───────────┼───────────┼───────────┼───────────┼───────────┤ │╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯│ ├───────────┼───────────┼───────────┼───────────┼───────────┤
-   │    F6     │    F7     │    F8     │    F9     │    F10    ├─╯                    ╰─┤     =     │     4     │     5     │     6     │     -     │
+   │    F6     │    F7     │    F8     │    F9     │    F10    ├─╯                    ╰─┤     (     │     4     │     5     │     6     │     )     │
    ├───────────┼───────────┼───────────┼───────────┼───────────┤╭──────────╮╭──────────╮├───────────┼───────────┼───────────┼───────────┼───────────┤
-   │           │           │           │    F11    │    F12    ││          ││          ││     *     │     1     │     2     │     3     │     _     │
+   │           │           │           │    F11    │    F12    ││          ││          ││     {     │     1     │     2     │     3     │     }     │
    └───────────┴───────────┴───────────┼───────────┼───────────┤╰──────────╯╰──────────╯├───────────┼───────────┼───────────┴───────────┴───────────┘
-                                       │           │           │           ││           │     0     │           │
+                                       │           │           │           ││     \     │     0     │           │
                                        └───────────┴───────────┴───────────┘└───────────┴───────────┴───────────┘ */
 
    [_NUM] = LAYOUT_saegewerk(
  //╷           ╷           ╷           ╷           ╷           ╷           ╷╷           ╷           ╷           ╷           ╷           ╷           ╷
-    KC_F1    ,  KC_F2    ,  KC_F3    ,  KC_F4    ,  KC_F5    ,                           KC_PLUS  ,  KC_7     ,  KC_8     ,  KC_9     ,  KC_CIRC  ,
-    KC_F6    ,  KC_F7    ,  KC_F8    ,  KC_F9    ,  KC_F10   ,                           KC_EQUAL ,  KC_4     ,  KC_5     ,  KC_6     ,  KC_MINUS ,
-    _______  ,  _______  ,  _______  ,  KC_F11   ,  KC_F12   ,  _______  ,   _______  ,  KC_ASTR  ,  KC_1     ,  KC_2     ,  KC_3     ,  KC_UNDS  ,
-                                        _______  ,  _______  ,  _______  ,   _______  ,  KC_0     ,  _______
+    KC_F1    ,  KC_F2    ,  KC_F3    ,  KC_F4    ,  KC_F5    ,                           KC_LBRC  ,  KC_7     ,  KC_8     ,  KC_9     ,  KC_RBRC  ,
+    KC_F6    ,  KC_F7    ,  KC_F8    ,  KC_F9    ,  KC_F10   ,                           KC_LPRN  ,  KC_4     ,  KC_5     ,  KC_6     ,  KC_RPRN  ,
+    _______  ,  _______  ,  _______  ,  KC_F11   ,  KC_F12   ,  _______  ,   _______  ,  KC_LCBR  ,  KC_1     ,  KC_2     ,  KC_3     ,  KC_RCBR  ,
+                                        _______  ,  _______  ,  _______  ,   KC_BSLS  ,  KC_0     ,  _______
  ),
 
  /*
@@ -296,20 +307,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    │ n a v i g a t i o n                                       │
    └───────────────────────────────────────────────────────────┘
    ┌───────────┬───────────┬───────────┬───────────┬───────────┐                        ┌───────────┬───────────┬───────────┬───────────┬───────────┐
-   │           │           │           │           │           │ ╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮ │           │     (     │     )     │     {     │     }     │
+   │           │           │     €     │           │           │ ╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮╭╮ │           │     Ü     │           │     Ö     │           │
    ├───────────┼───────────┼───────────┼───────────┼───────────┤ │╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯│ ├───────────┼───────────┼───────────┼───────────┼───────────┤
-   │           │           │           │           │           ├─╯                    ╰─┤     ←     │     ↓     │     ↑     │     →     │           │
+   │     Ä     │     ß     │           │  OSM SFT  │           ├─╯                    ╰─┤     ←     │     ↓     │     ↑     │     →     │           │
    ├───────────┼───────────┼───────────┼───────────┼───────────┤╭──────────╮╭──────────╮├───────────┼───────────┼───────────┼───────────┼───────────┤
    │           │           │           │           │           ││Shift + W ││    gg    ││           │     [     │     ]     │           │           │
    └───────────┴───────────┴───────────┼───────────┼───────────┤╰──────────╯╰──────────╯├───────────┼───────────┼───────────┴───────────┴───────────┘
-                                       │Toggle NAV │           │           ││  Delete   │           │           │
+                                       │Toggle NAV │           │           ││           │           │           │
                                        └───────────┴───────────┴───────────┘└───────────┴───────────┴───────────┘ */
    [_NAV] = LAYOUT_saegewerk(
  //╷           ╷           ╷           ╷           ╷           ╷           ╷╷           ╷           ╷           ╷           ╷           ╷           ╷
     _______  ,  _______  ,  KC_EURO  ,  _______  ,  _______  ,                           _______  ,  KC_UE    ,  _______  ,  KC_OE    ,  _______  ,
-    KC_AE    ,  KC_SZ    ,  _______  ,  _______  ,  _______  ,                           KC_LEFT  ,  KC_DOWN  ,  KC_UP    ,  KC_RIGHT ,  _______  ,
-    _______  ,  _______  ,  _______  ,  _______  ,  _______  ,  S(KC_W)  ,   VIM_TOP  ,  _______  ,  KC_LBRC  ,  KC_RBRC  ,  _______  ,  _______  ,
-                                        _______  ,  _______  ,  _______  ,   KC_DEL   ,  _______  ,  _______
+    KC_AE    ,  KC_SZ    ,  _______  ,  OSM_SFT  ,  _______  ,                           KC_LEFT  ,  KC_DOWN  ,  KC_UP    ,  KC_RIGHT ,  _______  ,
+    _______  ,  _______  ,  _______  ,  _______  ,  _______  ,  S(KC_W)  ,   VIM_TOP  ,  _______  ,  _______  ,  _______  ,  _______  ,  _______  ,
+                                        _______  ,  _______  ,  _______  ,   _______  ,  _______  ,  _______
  ),
 
  /*
@@ -337,6 +348,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  )
 };
 
+uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
+  switch (tap_hold_keycode) {
+    case NUM_ENT:
+    case SYM_SPC:
+    case NAV_TAB:
+    case NAV_BSP:
+      return 0;  // Bypass Achordion for these keys.
+  }
+
+  return 800;  // Otherwise use a timeout of 800 ms.
+}
 
 // ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 // │ H A P T I C   F E E D B A C K                                                                                                              │

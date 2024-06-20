@@ -26,6 +26,9 @@ for more options.
 #define PERMISSIVE_HOLD
 #define QUICK_TAP_TERM_PER_KEY
 
+#define ONESHOT_TAP_TOGGLE 1
+#define ONESHOT_TIMEOUT 5000
+
 #define ACHORDION_STREAK
 
 #define COMBO_MUST_HOLD_MODS
@@ -40,9 +43,6 @@ for more options.
 
 #undef LOCKING_SUPPORT_ENABLE
 #undef LOCKING_RESYNC_ENABLE
-#define NO_ACTION_ONESHOT
-//#define NO_ACTION_TAPPING
-//#define NO_MUSIC_MODE
 //
 #define AUDIO_CLICKY
 #define AUDIO_DEFAULT_CLICKY_ON false
