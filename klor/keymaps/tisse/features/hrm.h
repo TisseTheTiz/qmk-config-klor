@@ -43,7 +43,7 @@
     #if POS_HRM_ALT == 1
         #ifdef ENABLE_HRM_ALT
             #define A_HRM MT(MOD_LALT, KC_A)
-            #define COLON_HRM MT(MOD_RALT, KC_COLN)
+            #define COLON_HRM MT(MOD_RALT, KC_COLON)
         #else
             #define A_HRM KC_A
             #define COLON_HRM KC_COLN

@@ -7,11 +7,14 @@ for more options.
 
 #define MASTER_LEFT
 // #define MASTER_RIGHT
+//
+#undef SPLIT_USB_DETECT
+#define WAIT_FOR_USB
 
 // Enable home row mods
 #define ENABLE_HRM_SFT
 #define ENABLE_HRM_CTL
-/* #define ENABLE_HRM_ALT */
+#define ENABLE_HRM_ALT
 #define ENABLE_HRM_GUI
 
 #define POS_HRM_GUI 2

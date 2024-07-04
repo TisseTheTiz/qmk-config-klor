@@ -175,14 +175,12 @@ combo_t key_combos[] = {
 // │ d e f i n e   k e y   o v e r r i d e s                   │
 // └───────────────────────────────────────────────────────────┘
 
-/* const key_override_t backspace_override = ko_make_basic(MOD_MASK_SHIFT, SYM_SPC, KC_BSPC); */
 const key_override_t delete_override = ko_make_basic(MOD_MASK_SHIFT, NAV_BSP, KC_DEL);
-const key_override_t flipcolon_override = ko_make_basic(MOD_MASK_SHIFT, KC_COLON, KC_SEMICOLON);
-
+const key_override_t mplay_override = ko_make_basic(MOD_MASK_SHIFT, KC_MUTE, KC_MPLY);
 // This globally defines all key overrides to be used ├────────┐
 const key_override_t **key_overrides = (const key_override_t *[]){
   &delete_override,
-  &flipcolon_override,
+  &mplay_override,
   NULL // Null terminate the array of overrides!
 };
 
@@ -216,7 +214,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    ├───────────┼───────────┼───────────┼───────────┼───────────┤ │╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯│ ├───────────┼───────────┼───────────┼───────────┼───────────┤
    │   A/HRM   │   S/HRM   │   D/HRM   │   F/HRM   │     G     ├─╯                    ╰─┤     H     │   J/HRM   │   K/HRM   │   L/HRM   │   :/HRM   │
    ├───────────┼───────────┼───────────┼───────────┼───────────┤╭──────────╮╭──────────╮├───────────┼───────────┼───────────┼───────────┼───────────┤
-   │     Z     │     X     │     C     │     V     │     B     ││Play/Pause││   Mute   ││     N     │     M     │     ,     │     .     │     /     │
+   │     Z     │     X     │     C     │     V     │     B     ││  Ctrl+W  ││   Mute   ││     N     │     M     │     ,     │     .     │     /     │
    └───────────┴───────────┴───────────┼───────────┼───────────┤╰──────────╯╰──────────╯├───────────┼───────────┼───────────┴───────────┴───────────┘
                                        │  TT NAV   │ Tab/Shift │ Enter/NUM ││ Space/SYM │   Shift   │  Esc/NAV  │
                                        └───────────┴───────────┴───────────┘└───────────┴───────────┴───────────┘ */
@@ -224,7 +222,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    [_QWERTY] = LAYOUT_saegewerk(
     KC_Q     ,  KC_W     ,  KC_E     ,  KC_R     ,  KC_T     ,                           KC_Y     ,  KC_U     ,  KC_I     ,  KC_O     ,  KC_P     ,
     A_HRM    ,  S_HRM    ,  D_HRM    ,  F_HRM    ,  KC_G     ,                           KC_H     ,  J_HRM    ,  K_HRM    ,  L_HRM    ,  COLON_HRM,
-    KC_Z     ,  KC_X     ,  KC_C     ,  KC_V     ,  KC_B     ,  KC_MPLY  ,   KC_MUTE  ,  KC_N     ,  KC_M     ,  KC_COMM  ,  KC_DOT   ,  KC_SLSH  ,
+    KC_Z     ,  KC_X     ,  KC_C     ,  KC_V     ,  KC_B     ,  VIM_TOP  ,   KC_MUTE  ,  KC_N     ,  KC_M     ,  KC_COMM  ,  KC_DOT   ,  KC_SLSH  ,
                                         XXXXXXX  ,  NAV_TAB  ,  NUM_ENT  ,   SYM_SPC  ,  NAV_BSP  ,  XXXXXXX
  ),
 
@@ -272,7 +270,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  //╷           ╷           ╷           ╷           ╷           ╷           ╷╷           ╷           ╷           ╷           ╷           ╷           ╷
     KC_TILD  ,  KC_GRV   ,  _______  ,  KC_CIRC  ,  _______  ,                           _______  ,  _______  ,  _______  ,  _______  ,  _______  ,
     KC_EXLM  ,  KC_AT    ,  KC_HASH  ,  KC_DOLLAR,  KC_PERC  ,                           _______  ,  _______  ,  _______  ,  _______  ,  _______  ,
-    _______  ,  _______  ,  KC_PIPE  ,  KC_AMPR  ,  _______  ,  _______  ,   _______  ,  _______  ,  _______  ,  _______  ,  _______  ,  _______  ,
+    _______  ,  _______  ,  KC_PIPE  ,  KC_AMPR  ,  _______  ,  S(KC_W)  ,   _______  ,  _______  ,  _______  ,  _______  ,  _______  ,  _______  ,
                                         _______  ,  _______  ,  _______  ,   _______  ,  _______  ,  _______
  ),
 
@@ -287,7 +285,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    ├───────────┼───────────┼───────────┼───────────┼───────────┤ │╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯│ ├───────────┼───────────┼───────────┼───────────┼───────────┤
    │    F6     │    F7     │    F8     │    F9     │    F10    ├─╯                    ╰─┤     (     │     4     │     5     │     6     │     )     │
    ├───────────┼───────────┼───────────┼───────────┼───────────┤╭──────────╮╭──────────╮├───────────┼───────────┼───────────┼───────────┼───────────┤
-   │           │           │           │    F11    │    F12    ││          ││          ││     {     │     1     │     2     │     3     │     }     │
+   │           │           │           │    F11    │    F12    ││          ││Play/Pause││     {     │     1     │     2     │     3     │     }     │
    └───────────┴───────────┴───────────┼───────────┼───────────┤╰──────────╯╰──────────╯├───────────┼───────────┼───────────┴───────────┴───────────┘
                                        │           │           │           ││     \     │     0     │           │
                                        └───────────┴───────────┴───────────┘└───────────┴───────────┴───────────┘ */
@@ -319,7 +317,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  //╷           ╷           ╷           ╷           ╷           ╷           ╷╷           ╷           ╷           ╷           ╷           ╷           ╷
     _______  ,  _______  ,  KC_EURO  ,  _______  ,  _______  ,                           _______  ,  KC_UE    ,  _______  ,  KC_OE    ,  _______  ,
     KC_AE    ,  KC_SZ    ,  _______  ,  OSM_SFT  ,  _______  ,                           KC_LEFT  ,  KC_DOWN  ,  KC_UP    ,  KC_RIGHT ,  _______  ,
-    _______  ,  _______  ,  _______  ,  _______  ,  _______  ,  S(KC_W)  ,   VIM_TOP  ,  _______  ,  _______  ,  _______  ,  _______  ,  _______  ,
+    _______  ,  _______  ,  _______  ,  _______  ,  _______  ,  _______  ,   _______  ,  _______  ,  _______  ,  _______  ,  _______  ,  _______  ,
                                         _______  ,  _______  ,  _______  ,   _______  ,  _______  ,  _______
  ),
 
@@ -709,14 +707,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case VIM_TOP:
             if (record->event.pressed) {
-                tap_code(KC_G);
-                tap_code(KC_G);
+                if ( get_mods() & MOD_MASK_SHIFT ) { // Go to the bottom if shift is held
+                    tap_code16(S(KC_G));
+                } else { // Otherwise go to the top
+                    tap_code(KC_G);
+                    tap_code(KC_G);
+                }
             }
             break;
         case VIM_INC:
             if (record->event.pressed) {
                 tap_code(KC_G);
-                tap_code(KC_EQUAL);
+                tap_code(KC_EQUAL); // Increment otherwise
             }
             break;
         case VIM_DEC:
@@ -746,7 +748,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             clear_keyboard();  // ──── clear to prevent stuck keys    
             return false;
           }
-
 
 // ┌───────────────────────────────────────────────────────────┐
 // │ l a y e r                                                 │
@@ -820,8 +821,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           #endif // HAPTIC_ENABL
         }
         break;
+
+
+// ┌───────────────────────────────────────────────────────────┐
+// │ w o r k a r o u n d s                                     │
+// └───────────────────────────────────────────────────────────┘
+
+      /* If ALT on colon is used as a home row modifier, send out the 16 bit shifted keycode for colon */
+      case MT(MOD_RALT, KC_COLON):
+        if (record->tap.count && record->event.pressed) {
+            uint8_t mod_state = get_mods();
+            if ( mod_state & MOD_MASK_SHIFT ) {
+                del_mods( MOD_MASK_SHIFT );
+                tap_code( KC_SEMICOLON );
+                set_mods( mod_state );
+            } else {
+                tap_code16(KC_COLON); // Send colon if the key is pressed
+            }
+        } else if (record->event.pressed) {
+            tap_code16(KC_RALT); // RALT if key is held
+        }
+        return false;
     }
     return true;
+
+
 }
 
 
@@ -833,22 +857,41 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef ENCODER_ENABLE
 
 bool encoder_update_user(uint8_t index, bool clockwise) {
+    uint8_t mod_state = get_mods();
 // ┌───────────────────────────────────────────────────────────┐
 // │ e n c o d e r  L                                          │
-// └───────────────────────────────────────────────────────────┘ 
+// └───────────────────────────────────────────────────────────┘
 
     if (index == 0) {
       if(IS_LAYER_ON(_NAV)){
-        if (clockwise) {
-            tap_code(KC_DOT);
+        if (clockwise) { // Page up/down
+            tap_code(KC_PGDN);
         } else {
-            tap_code(KC_COMMA);
+            tap_code(KC_PGUP);
+        }
+      } else if (IS_LAYER_ON(_SYM)){
+        if (clockwise) { // Right/left
+            tap_code16(KC_PLUS);
+        } else {
+            tap_code(KC_MINUS);
         }
       } else {
-        if (clockwise) {
-          tap_code(KC_VOLU);
+        if (clockwise) { // Up/down
+            if( mod_state & MOD_MASK_SHIFT ) {
+                del_mods( MOD_MASK_SHIFT );
+                tap_code( KC_RIGHT );
+                set_mods( mod_state );
+            } else {
+                tap_code(KC_DOWN);
+            }
         } else {
-          tap_code(KC_VOLD);
+            if( mod_state & MOD_MASK_SHIFT ) {
+                del_mods( MOD_MASK_SHIFT );
+                tap_code( KC_LEFT );
+                set_mods( mod_state );
+            } else {
+                tap_code(KC_UP);
+            }
         }
       }
 
@@ -858,16 +901,36 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 
     } else if (index == 1) {
       if(IS_LAYER_ON(_NAV)){
-        if (clockwise) {
-            tap_code(KC_PGDN);
+        if (clockwise) { // Next/previous song
+            tap_code16(C(KC_PGDN));
         } else {
-            tap_code(KC_PGUP);
+            tap_code16(C(KC_PGUP));
+        }
+      } else if(IS_LAYER_ON(_NUM)){
+        if (clockwise) { // Vim increment
+            tap_code(KC_G);
+            tap_code(KC_EQUAL);
+        } else {
+            tap_code(KC_G); // Vim decrement
+            tap_code(KC_MINUS);
         }
       } else {
-        if (clockwise) {
-            tap_code(KC_MNXT);
+        if (clockwise) { // Volume up/down
+            if( mod_state & MOD_MASK_SHIFT ) {
+                del_mods( MOD_MASK_SHIFT );
+                tap_code( KC_MNXT );
+                set_mods( mod_state );
+            } else {
+                tap_code(KC_VOLU);
+            }
         } else {
-            tap_code(KC_MPRV);
+            if( mod_state & MOD_MASK_SHIFT ) {
+                del_mods( MOD_MASK_SHIFT );
+                tap_code( KC_MPRV );
+                set_mods( mod_state );
+            } else {
+                tap_code(KC_VOLD);
+            }
         }
       }
     }
