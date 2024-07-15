@@ -72,20 +72,12 @@ enum custom_keycodes {
 
 // MOD-TAP KEYS ├──────────────────────────────────────────────┐
 
-/* #define SFT_ENT LSFT_T(KC_ENT) */
-/* #define SFT_SPC RSFT_T(KC_SPC) */
-#define SFT_TAB LSFT_T(KC_TAB)
-#define SFT_ESC RSFT_T(KC_ESC)
-#define SFT_BSP RSFT_T(KC_BSPC)
-
 // LAYER-TAP KEYS ├────────────────────────────────────────────┐
 
 #define NUM_ENT LT(_NUM, KC_ENT)
-#define NUM_TAB LT(_NUM, KC_TAB)
+#define SYM_SPC LT(_SYM, KC_SPC)
 #define NAV_TAB LT(_NAV, KC_TAB)
 #define NAV_BSP LT(_NAV, KC_BSPC)
-#define SYM_SPC LT(_SYM, KC_SPC)
-#define NAV_ESC LT(_NAV, KC_ESC)
 
 // TAP-DANCE KEYS ├────────────────────────────────────────────┐
 
@@ -309,9 +301,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    ├───────────┼───────────┼───────────┼───────────┼───────────┤ │╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯╰╯│ ├───────────┼───────────┼───────────┼───────────┼───────────┤
    │     Ä     │     ß     │           │  OSM SFT  │           ├─╯                    ╰─┤     ←     │     ↓     │     ↑     │     →     │           │
    ├───────────┼───────────┼───────────┼───────────┼───────────┤╭──────────╮╭──────────╮├───────────┼───────────┼───────────┼───────────┼───────────┤
-   │           │           │           │           │           ││Shift + W ││    gg    ││           │     [     │     ]     │           │           │
+   │           │           │           │           │           ││Shift + W ││    gg    ││           │           │           │           │           │
    └───────────┴───────────┴───────────┼───────────┼───────────┤╰──────────╯╰──────────╯├───────────┼───────────┼───────────┴───────────┴───────────┘
-                                       │Toggle NAV │           │           ││           │           │           │
+                                       │           │           │           ││           │           │           │
                                        └───────────┴───────────┴───────────┘└───────────┴───────────┴───────────┘ */
    [_NAV] = LAYOUT_saegewerk(
  //╷           ╷           ╷           ╷           ╷           ╷           ╷╷           ╷           ╷           ╷           ╷           ╷           ╷
